@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>NovaStore Admin</title>
 
   <style>
@@ -16,8 +17,10 @@
     body {
       background: #f4f6f8;
       min-height: 100vh;
+      color: #222;
     }
 
+    /* LOGIN */
     #loginPage {
       min-height: 100vh;
       display: flex;
@@ -27,16 +30,18 @@
     }
 
     .login-box {
+      background: white;
       width: 100%;
       max-width: 400px;
-      background: white;
       padding: 30px;
       border-radius: 15px;
-      box-shadow: 0 5px 25px rgba(0,0,0,.1);
+      box-shadow: 0 5px 25px rgba(0,0,0,0.1);
     }
 
-    h1 {
+    .logo {
       text-align: center;
+      font-size: 30px;
+      font-weight: bold;
       margin-bottom: 8px;
     }
 
@@ -46,42 +51,45 @@
       margin-bottom: 25px;
     }
 
-    label {
+    .login-box label {
       display: block;
-      font-weight: bold;
       margin-bottom: 7px;
+      font-weight: bold;
     }
 
-    input {
+    .login-box input {
       width: 100%;
       padding: 13px;
+      margin-bottom: 16px;
       border: 1px solid #ddd;
       border-radius: 8px;
-      margin-bottom: 16px;
       font-size: 16px;
     }
 
-    button {
-      cursor: pointer;
-    }
-
-    #loginButton {
+    .login-btn {
       width: 100%;
       padding: 14px;
-      border: 0;
+      border: none;
       border-radius: 8px;
       background: #111;
       color: white;
       font-size: 16px;
       font-weight: bold;
+      cursor: pointer;
     }
 
-    #message {
-      text-align: center;
+    .login-btn:hover {
+      opacity: 0.9;
+    }
+
+    #loginMessage {
       margin-top: 15px;
-      color: #c00;
+      text-align: center;
+      color: #d00;
+      font-size: 14px;
     }
 
+    /* ADMIN */
     #adminPage {
       display: none;
     }
@@ -93,18 +101,20 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 15px;
     }
 
-    header h2 {
-      margin: 0;
+    header h1 {
+      font-size: 22px;
     }
 
-    #logoutButton {
+    .logout-btn {
+      border: none;
       background: white;
       color: #111;
-      border: 0;
-      padding: 10px 16px;
+      padding: 9px 15px;
       border-radius: 7px;
+      cursor: pointer;
       font-weight: bold;
     }
 
@@ -114,28 +124,34 @@
       padding: 0 20px;
     }
 
-    .welcome,
-    .card,
-    .section {
+    .welcome {
       background: white;
+      padding: 20px;
       border-radius: 12px;
-      padding: 25px;
-      box-shadow: 0 2px 10px rgba(0,0,0,.05);
+      margin-bottom: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
     }
 
-    .welcome {
-      margin-bottom: 20px;
+    .welcome h2 {
+      margin-bottom: 8px;
     }
 
     .welcome p {
       color: #666;
-      margin-top: 8px;
+      word-break: break-word;
     }
 
     .cards {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 18px;
+    }
+
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
     }
 
     .card h3 {
@@ -149,45 +165,65 @@
     }
 
     .section {
+      background: white;
       margin-top: 20px;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    .section h2 {
+      margin-bottom: 15px;
     }
 
     .section p {
       color: #666;
       line-height: 1.6;
-      margin-top: 10px;
     }
 
-    .store-link {
+    .store-btn {
       display: inline-block;
-      margin-top: 18px;
+      margin-top: 15px;
       padding: 12px 18px;
       background: #111;
       color: white;
       text-decoration: none;
       border-radius: 8px;
     }
+
+    @media (max-width: 500px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .logout-btn {
+        width: 100%;
+      }
+    }
   </style>
 </head>
 
 <body>
 
-  <!-- LOGIN -->
-  <section id="loginPage">
+  <!-- LOGIN PAGE -->
+  <div id="loginPage">
 
     <div class="login-box">
 
-      <h1>NovaStore</h1>
+      <div class="logo">NovaStore</div>
 
-      <p class="subtitle">Admin Panel</p>
+      <div class="subtitle">
+        Admin Panel
+      </div>
 
       <form id="loginForm">
 
         <label for="email">Email</label>
 
         <input
-          id="email"
           type="email"
+          id="email"
           placeholder="Admin email"
           required
         >
@@ -195,37 +231,45 @@
         <label for="password">Password</label>
 
         <input
-          id="password"
           type="password"
+          id="password"
           placeholder="Password"
           required
         >
 
-        <button id="loginButton" type="submit">
+        <button
+          type="submit"
+          class="login-btn"
+          id="loginButton"
+        >
           Login
         </button>
 
       </form>
 
-      <div id="message"></div>
+      <div id="loginMessage"></div>
 
     </div>
 
-  </section>
+  </div>
 
 
-  <!-- ADMIN DASHBOARD -->
-  <section id="adminPage">
+  <!-- ADMIN PAGE -->
+  <div id="adminPage">
 
     <header>
 
-      <h2>NovaStore Admin</h2>
+      <h1>NovaStore Admin</h1>
 
-      <button id="logoutButton">
+      <button
+        class="logout-btn"
+        id="logoutButton"
+      >
         Logout
       </button>
 
     </header>
+
 
     <main class="container">
 
@@ -233,58 +277,68 @@
 
         <h2>Welcome, Admin 👋</h2>
 
-        <p>You are logged into the NovaStore admin panel.</p>
-
         <p>
-          Account:
+          You are successfully logged into the NovaStore administration panel.
+        </p>
+
+        <p style="margin-top:8px;">
+          Signed in as:
           <strong id="adminEmail"></strong>
         </p>
 
-        <a class="store-link" href="index.html">
+        <a
+          href="index.html"
+          class="store-btn"
+        >
           View Store
         </a>
 
       </div>
 
+
       <div class="cards">
 
         <div class="card">
           <h3>Products</h3>
-          <strong>0</strong>
+          <strong id="productCount">0</strong>
         </div>
 
         <div class="card">
           <h3>Orders</h3>
-          <strong>0</strong>
+          <strong id="orderCount">0</strong>
         </div>
 
         <div class="card">
           <h3>Customers</h3>
-          <strong>0</strong>
+          <strong id="customerCount">0</strong>
         </div>
 
       </div>
 
+
       <div class="section">
 
-        <h2>Dashboard</h2>
+        <h2>Admin Dashboard</h2>
 
         <p>
-          Firebase authentication is connected. We can now connect
-          your products, orders and customers to your database.
+          Your Firebase authentication is connected successfully.
+          This dashboard is ready for us to connect to your NovaStore
+          products, orders and customer database.
         </p>
 
       </div>
 
     </main>
 
-  </section>
+  </div>
 
 
+  <!-- FIREBASE -->
   <script type="module">
 
-    import { initializeApp }
-      from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+    import {
+      initializeApp
+    } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
     import {
       getAuth,
@@ -294,141 +348,168 @@
     } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
 
+    /* YOUR FIREBASE CONFIG */
+
     const firebaseConfig = {
 
       apiKey: "AIzaSyCNrU3igTkkcQ0Z6Zq1dluKw_s_3yHovjE",
 
-      authDomain:
-        "novastore-6fd18.firebaseapp.com",
+      authDomain: "novastore-6fd18.firebaseapp.com",
 
       databaseURL:
         "https://novastore-6fd18-default-rtdb.asia-southeast1.firebasedatabase.app",
 
-      projectId:
-        "novastore-6fd18",
+      projectId: "novastore-6fd18",
 
       storageBucket:
         "novastore-6fd18.firebasestorage.app",
 
-      messagingSenderId:
-        "783420364153",
+      messagingSenderId: "783420364153",
 
       appId:
         "1:783420364153:web:1b56b655e3e804726d8ba8",
 
-      measurementId:
-        "G-Q760SBLPLT"
+      measurementId: "G-Q760SBLPLT"
     };
 
 
-    try {
+    /* INITIALIZE FIREBASE */
 
-      const app = initializeApp(firebaseConfig);
+    const app = initializeApp(firebaseConfig);
 
-      const auth = getAuth(app);
-
-      const loginPage =
-        document.getElementById("loginPage");
-
-      const adminPage =
-        document.getElementById("adminPage");
-
-      const loginForm =
-        document.getElementById("loginForm");
-
-      const message =
-        document.getElementById("message");
-
-      const loginButton =
-        document.getElementById("loginButton");
-
-      const logoutButton =
-        document.getElementById("logoutButton");
-
-      const adminEmail =
-        document.getElementById("adminEmail");
+    const auth = getAuth(app);
 
 
-      loginForm.addEventListener("submit", async function(e) {
+    /* ELEMENTS */
 
-        e.preventDefault();
+    const loginPage =
+      document.getElementById("loginPage");
 
-        const email =
-          document.getElementById("email").value.trim();
+    const adminPage =
+      document.getElementById("adminPage");
 
-        const password =
-          document.getElementById("password").value;
+    const loginForm =
+      document.getElementById("loginForm");
 
-        message.textContent = "";
+    const loginMessage =
+      document.getElementById("loginMessage");
 
-        loginButton.disabled = true;
+    const loginButton =
+      document.getElementById("loginButton");
 
-        loginButton.textContent = "Logging in...";
+    const logoutButton =
+      document.getElementById("logoutButton");
 
-
-        try {
-
-          await signInWithEmailAndPassword(
-            auth,
-            email,
-            password
-          );
-
-        } catch (error) {
-
-          console.error(error);
-
-          message.textContent =
-            "Login failed. Check your email and password.";
-
-        } finally {
-
-          loginButton.disabled = false;
-
-          loginButton.textContent = "Login";
-
-        }
-
-      });
+    const adminEmail =
+      document.getElementById("adminEmail");
 
 
-      onAuthStateChanged(auth, function(user) {
+    /* LOGIN */
 
-        if (user) {
+    loginForm.addEventListener("submit", async (event) => {
 
-          loginPage.style.display = "none";
+      event.preventDefault();
 
-          adminPage.style.display = "block";
+      const email =
+        document.getElementById("email").value.trim();
 
-          adminEmail.textContent =
-            user.email || "";
+      const password =
+        document.getElementById("password").value;
+
+      loginMessage.textContent = "";
+
+      loginButton.disabled = true;
+
+      loginButton.textContent = "Logging in...";
+
+
+      try {
+
+        await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+
+      } catch (error) {
+
+        console.error(error);
+
+        if (
+          error.code === "auth/invalid-credential" ||
+          error.code === "auth/wrong-password" ||
+          error.code === "auth/user-not-found"
+        ) {
+
+          loginMessage.textContent =
+            "Incorrect email or password.";
+
+        } else if (
+          error.code === "auth/too-many-requests"
+        ) {
+
+          loginMessage.textContent =
+            "Too many attempts. Please try again later.";
 
         } else {
 
-          loginPage.style.display = "flex";
-
-          adminPage.style.display = "none";
+          loginMessage.textContent =
+            "Login failed. Please try again.";
 
         }
 
-      });
+      } finally {
+
+        loginButton.disabled = false;
+
+        loginButton.textContent = "Login";
+
+      }
+
+    });
 
 
-      logoutButton.addEventListener("click", async function() {
+    /* CHECK LOGIN STATUS */
+
+    onAuthStateChanged(auth, (user) => {
+
+      if (user) {
+
+        loginPage.style.display = "none";
+
+        adminPage.style.display = "block";
+
+        adminEmail.textContent =
+          user.email || "Admin";
+
+      } else {
+
+        loginPage.style.display = "flex";
+
+        adminPage.style.display = "none";
+
+        adminEmail.textContent = "";
+
+      }
+
+    });
+
+
+    /* LOGOUT */
+
+    logoutButton.addEventListener("click", async () => {
+
+      try {
 
         await signOut(auth);
 
-      });
+      } catch (error) {
 
+        console.error(error);
 
-    } catch (error) {
+      }
 
-      console.error(error);
-
-      document.getElementById("message").textContent =
-        "Firebase could not load. Please refresh the page.";
-
-    }
+    });
 
   </script>
 
