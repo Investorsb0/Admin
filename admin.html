@@ -1,517 +1,847 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>NovaStore Admin</title>
+<title>NovaStore Admin</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f5f6f8;
+    color:#222;
+}
+
+header{
+    background:#111827;
+    color:white;
+    padding:18px 20px;
+}
+
+header h1{
+    max-width:1100px;
+    margin:auto;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:25px 15px;
+}
+
+.box{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    margin-bottom:20px;
+    box-shadow:0 2px 10px #00000012;
+}
+
+input,select{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:7px;
+    margin:6px 0 12px;
+}
+
+button{
+    border:0;
+    border-radius:7px;
+    padding:11px 15px;
+    cursor:pointer;
+}
+
+.primary{
+    background:#22c55e;
+    color:white;
+    width:100%;
+    font-weight:bold;
+}
+
+.dark{
+    background:#111827;
+    color:white;
+}
+
+.danger{
+    background:#ef4444;
+    color:white;
+}
+
+.hidden{
+    display:none;
+}
+
+.product{
+    border:1px solid #ddd;
+    border-radius:10px;
+    padding:15px;
+    margin-top:12px;
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+    align-items:center;
+}
+
+.product-info{
+    flex:1;
+}
+
+.product-info h3{
+    margin-bottom:6px;
+}
+
+.product-info p{
+    color:#666;
+    font-size:14px;
+}
+
+.actions{
+    display:flex;
+    gap:7px;
+}
+
+.status{
+    padding:12px;
+    border-radius:7px;
+    margin-bottom:15px;
+    background:#eef2ff;
+}
+
+@media(max-width:650px){
+    .product{
+        flex-direction:column;
+        align-items:stretch;
     }
 
-    body {
-      background: #f4f6f8;
-      min-height: 100vh;
-      color: #222;
+    .actions{
+        width:100%;
     }
 
-    /* LOGIN */
-    #loginPage {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
+    .actions button{
+        flex:1;
     }
-
-    .login-box {
-      background: white;
-      width: 100%;
-      max-width: 400px;
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 5px 25px rgba(0,0,0,0.1);
-    }
-
-    .logo {
-      text-align: center;
-      font-size: 30px;
-      font-weight: bold;
-      margin-bottom: 8px;
-    }
-
-    .subtitle {
-      text-align: center;
-      color: #777;
-      margin-bottom: 25px;
-    }
-
-    .login-box label {
-      display: block;
-      margin-bottom: 7px;
-      font-weight: bold;
-    }
-
-    .login-box input {
-      width: 100%;
-      padding: 13px;
-      margin-bottom: 16px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      font-size: 16px;
-    }
-
-    .login-btn {
-      width: 100%;
-      padding: 14px;
-      border: none;
-      border-radius: 8px;
-      background: #111;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .login-btn:hover {
-      opacity: 0.9;
-    }
-
-    #loginMessage {
-      margin-top: 15px;
-      text-align: center;
-      color: #d00;
-      font-size: 14px;
-    }
-
-    /* ADMIN */
-    #adminPage {
-      display: none;
-    }
-
-    header {
-      background: #111;
-      color: white;
-      padding: 18px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-    }
-
-    header h1 {
-      font-size: 22px;
-    }
-
-    .logout-btn {
-      border: none;
-      background: white;
-      color: #111;
-      padding: 9px 15px;
-      border-radius: 7px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .container {
-      max-width: 1100px;
-      margin: 25px auto;
-      padding: 0 20px;
-    }
-
-    .welcome {
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      margin-bottom: 20px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    }
-
-    .welcome h2 {
-      margin-bottom: 8px;
-    }
-
-    .welcome p {
-      color: #666;
-      word-break: break-word;
-    }
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 18px;
-    }
-
-    .card {
-      background: white;
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    }
-
-    .card h3 {
-      color: #777;
-      font-size: 15px;
-      margin-bottom: 10px;
-    }
-
-    .card strong {
-      font-size: 28px;
-    }
-
-    .section {
-      background: white;
-      margin-top: 20px;
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    }
-
-    .section h2 {
-      margin-bottom: 15px;
-    }
-
-    .section p {
-      color: #666;
-      line-height: 1.6;
-    }
-
-    .store-btn {
-      display: inline-block;
-      margin-top: 15px;
-      padding: 12px 18px;
-      background: #111;
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
-    }
-
-    @media (max-width: 500px) {
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .logout-btn {
-        width: 100%;
-      }
-    }
-  </style>
+}
+</style>
 </head>
 
 <body>
 
-  <!-- LOGIN PAGE -->
-  <div id="loginPage">
+<header>
+<h1>NovaStore Admin</h1>
+</header>
 
-    <div class="login-box">
+<div class="container">
 
-      <div class="logo">NovaStore</div>
+<!-- LOGIN -->
 
-      <div class="subtitle">
-        Admin Panel
-      </div>
+<div id="loginBox" class="box">
 
-      <form id="loginForm">
+<h2>Admin Login</h2>
 
-        <label for="email">Email</label>
+<br>
 
-        <input
-          type="email"
-          id="email"
-          placeholder="Admin email"
-          required
-        >
+<input
+id="email"
+type="email"
+placeholder="Admin email"
+>
 
-        <label for="password">Password</label>
+<input
+id="password"
+type="password"
+placeholder="Password"
+>
 
-        <input
-          type="password"
-          id="password"
-          placeholder="Password"
-          required
-        >
+<button
+class="primary"
+onclick="login()"
+>
+Login
+</button>
 
-        <button
-          type="submit"
-          class="login-btn"
-          id="loginButton"
-        >
-          Login
-        </button>
+<p id="loginStatus" style="margin-top:12px;color:#ef4444"></p>
 
-      </form>
+</div>
 
-      <div id="loginMessage"></div>
 
-    </div>
+<!-- DASHBOARD -->
 
-  </div>
+<div id="dashboard" class="hidden">
 
+<div class="box">
 
-  <!-- ADMIN PAGE -->
-  <div id="adminPage">
+<h2>Admin Dashboard</h2>
 
-    <header>
+<p id="adminEmail" style="margin:8px 0;color:#666"></p>
 
-      <h1>NovaStore Admin</h1>
+<button
+class="dark"
+onclick="logout()"
+>
+Logout
+</button>
 
-      <button
-        class="logout-btn"
-        id="logoutButton"
-      >
-        Logout
-      </button>
+</div>
 
-    </header>
 
+<!-- ADD PRODUCT -->
 
-    <main class="container">
+<div class="box">
 
-      <div class="welcome">
+<h2 id="formTitle">
+Add Product
+</h2>
 
-        <h2>Welcome, Admin 👋</h2>
+<br>
 
-        <p>
-          You are successfully logged into the NovaStore administration panel.
-        </p>
+<input
+id="productName"
+type="text"
+placeholder="Product name"
+>
 
-        <p style="margin-top:8px;">
-          Signed in as:
-          <strong id="adminEmail"></strong>
-        </p>
+<input
+id="productPrice"
+type="number"
+placeholder="Price"
+>
 
-        <a
-          href="index.html"
-          class="store-btn"
-        >
-          View Store
-        </a>
+<input
+id="productOld"
+type="number"
+placeholder="Old price"
+>
 
-      </div>
+<select id="productCategory">
 
+<option value="Electronics">
+Electronics
+</option>
 
-      <div class="cards">
+<option value="Fashion">
+Fashion
+</option>
 
-        <div class="card">
-          <h3>Products</h3>
-          <strong id="productCount">0</strong>
-        </div>
+<option value="Home">
+Home
+</option>
 
-        <div class="card">
-          <h3>Orders</h3>
-          <strong id="orderCount">0</strong>
-        </div>
+<option value="Accessories">
+Accessories
+</option>
 
-        <div class="card">
-          <h3>Customers</h3>
-          <strong id="customerCount">0</strong>
-        </div>
+</select>
 
-      </div>
+<input
+id="productIcon"
+type="text"
+placeholder="Product icon e.g. 🎧"
+>
 
+<input
+id="productDescription"
+type="text"
+placeholder="Product description"
+>
 
-      <div class="section">
+<button
+class="primary"
+onclick="saveProduct()"
+id="saveButton"
+>
+Add Product
+</button>
 
-        <h2>Admin Dashboard</h2>
+<br><br>
 
-        <p>
-          Your Firebase authentication is connected successfully.
-          This dashboard is ready for us to connect to your NovaStore
-          products, orders and customer database.
-        </p>
+<button
+class="dark hidden"
+onclick="cancelEdit()"
+id="cancelButton"
+>
+Cancel Edit
+</button>
 
-      </div>
+<p id="productStatus" style="margin-top:12px"></p>
 
-    </main>
+</div>
 
-  </div>
 
+<!-- PRODUCTS -->
 
-  <!-- FIREBASE -->
-  <script type="module">
+<div class="box">
 
-    import {
-      initializeApp
-    } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+<h2>Products</h2>
 
-    import {
-      getAuth,
-      signInWithEmailAndPassword,
-      onAuthStateChanged,
-      signOut
-    } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+<div id="productsList">
+Loading products...
+</div>
 
+</div>
 
-    /* YOUR FIREBASE CONFIG */
+</div>
 
-    const firebaseConfig = {
+</div>
 
-      apiKey: "AIzaSyCNrU3igTkkcQ0Z6Zq1dluKw_s_3yHovjE",
 
-      authDomain: "novastore-6fd18.firebaseapp.com",
+<script type="module">
 
-      databaseURL:
-        "https://novastore-6fd18-default-rtdb.asia-southeast1.firebasedatabase.app",
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-      projectId: "novastore-6fd18",
+import {
+    getAuth,
+    signInWithEmailAndPassword,
+    onAuthStateChanged,
+    signOut
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-      storageBucket:
-        "novastore-6fd18.firebasestorage.app",
+import {
+    getDatabase,
+    ref,
+    push,
+    set,
+    get,
+    remove
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-      messagingSenderId: "783420364153",
 
-      appId:
-        "1:783420364153:web:1b56b655e3e804726d8ba8",
+/* FIREBASE */
 
-      measurementId: "G-Q760SBLPLT"
-    };
+const firebaseConfig = {
 
+    apiKey:
+    "AIzaSyCNrU3igTkkcQ0Z6Zq1dluKw_s_3yHovjE",
 
-    /* INITIALIZE FIREBASE */
+    authDomain:
+    "novastore-6fd18.firebaseapp.com",
 
-    const app = initializeApp(firebaseConfig);
+    databaseURL:
+    "https://novastore-6fd18-default-rtdb.asia-southeast1.firebasedatabase.app",
 
-    const auth = getAuth(app);
+    projectId:
+    "novastore-6fd18",
 
+    storageBucket:
+    "novastore-6fd18.firebasestorage.app",
 
-    /* ELEMENTS */
+    messagingSenderId:
+    "783420364153",
 
-    const loginPage =
-      document.getElementById("loginPage");
+    appId:
+    "1:783420364153:web:1b56b655e3e804726d8ba8",
 
-    const adminPage =
-      document.getElementById("adminPage");
+    measurementId:
+    "G-Q760SBLPLT"
+};
 
-    const loginForm =
-      document.getElementById("loginForm");
 
-    const loginMessage =
-      document.getElementById("loginMessage");
+const app = initializeApp(firebaseConfig);
 
-    const loginButton =
-      document.getElementById("loginButton");
+const auth = getAuth(app);
 
-    const logoutButton =
-      document.getElementById("logoutButton");
+const db = getDatabase(app);
 
-    const adminEmail =
-      document.getElementById("adminEmail");
 
+/* ADMIN EMAIL */
 
-    /* LOGIN */
+const ADMIN_EMAIL =
+"Sbgodstime@gmail.com";
 
-    loginForm.addEventListener("submit", async (event) => {
 
-      event.preventDefault();
+/* EDITING */
 
-      const email =
-        document.getElementById("email").value.trim();
+let editingId = null;
 
-      const password =
-        document.getElementById("password").value;
 
-      loginMessage.textContent = "";
+/* LOGIN */
 
-      loginButton.disabled = true;
+window.login = async function(){
 
-      loginButton.textContent = "Logging in...";
+    const email =
+    document.getElementById("email").value.trim();
 
+    const password =
+    document.getElementById("password").value;
 
-      try {
+    const status =
+    document.getElementById("loginStatus");
 
+    status.textContent = "";
+
+    if(!email || !password){
+
+        status.textContent =
+        "Enter your email and password.";
+
+        return;
+    }
+
+    try{
+
+        const result =
         await signInWithEmailAndPassword(
-          auth,
-          email,
-          password
+            auth,
+            email,
+            password
         );
 
-      } catch (error) {
+        if(
+            result.user.email.toLowerCase() !==
+            ADMIN_EMAIL.toLowerCase()
+        ){
+
+            await signOut(auth);
+
+            status.textContent =
+            "This account is not authorized as an admin.";
+
+            return;
+        }
+
+    }catch(error){
 
         console.error(error);
 
-        if (
-          error.code === "auth/invalid-credential" ||
-          error.code === "auth/wrong-password" ||
-          error.code === "auth/user-not-found"
-        ) {
+        status.textContent =
+        "Login failed. Check your email and password.";
 
-          loginMessage.textContent =
-            "Incorrect email or password.";
+    }
 
-        } else if (
-          error.code === "auth/too-many-requests"
-        ) {
+};
 
-          loginMessage.textContent =
-            "Too many attempts. Please try again later.";
 
-        } else {
+/* AUTH STATE */
 
-          loginMessage.textContent =
-            "Login failed. Please try again.";
+onAuthStateChanged(auth,user => {
+
+    if(
+        user &&
+        user.email &&
+        user.email.toLowerCase() ===
+        ADMIN_EMAIL.toLowerCase()
+    ){
+
+        document
+        .getElementById("loginBox")
+        .classList.add("hidden");
+
+        document
+        .getElementById("dashboard")
+        .classList.remove("hidden");
+
+        document
+        .getElementById("adminEmail")
+        .textContent =
+        "Logged in as: " + user.email;
+
+        loadProducts();
+
+    }else{
+
+        document
+        .getElementById("loginBox")
+        .classList.remove("hidden");
+
+        document
+        .getElementById("dashboard")
+        .classList.add("hidden");
+
+    }
+
+});
+
+
+/* LOGOUT */
+
+window.logout = async function(){
+
+    await signOut(auth);
+
+};
+
+
+/* LOAD PRODUCTS */
+
+async function loadProducts(){
+
+    const list =
+    document.getElementById("productsList");
+
+    list.innerHTML =
+    "Loading products...";
+
+    try{
+
+        const snapshot =
+        await get(ref(db,"products"));
+
+        if(!snapshot.exists()){
+
+            list.innerHTML =
+            "<p>No products yet.</p>";
+
+            return;
+        }
+
+        const data =
+        snapshot.val();
+
+        list.innerHTML = "";
+
+        Object.entries(data).forEach(
+            ([id,p]) => {
+
+                const div =
+                document.createElement("div");
+
+                div.className =
+                "product";
+
+                div.innerHTML = `
+
+                    <div class="product-info">
+
+                        <h3>
+                            ${escapeHtml(p.icon || "📦")}
+                            ${escapeHtml(p.name || "")}
+                        </h3>
+
+                        <p>
+                            Category:
+                            ${escapeHtml(p.cat || "")}
+                        </p>
+
+                        <p>
+                            Price:
+                            ₦${Number(p.price || 0).toLocaleString("en-NG")}
+                        </p>
+
+                    </div>
+
+                    <div class="actions">
+
+                        <button
+                            class="dark"
+                            onclick="editProduct('${id}')"
+                        >
+                            Edit
+                        </button>
+
+                        <button
+                            class="danger"
+                            onclick="deleteProduct('${id}')"
+                        >
+                            Delete
+                        </button>
+
+                    </div>
+                `;
+
+                list.appendChild(div);
+
+            }
+        );
+
+    }catch(error){
+
+        console.error(error);
+
+        list.innerHTML =
+        "<p style='color:red'>Could not load products.</p>";
+
+    }
+
+}
+
+
+/* SAVE PRODUCT */
+
+window.saveProduct = async function(){
+
+    const name =
+    document.getElementById("productName")
+    .value.trim();
+
+    const price =
+    Number(
+        document.getElementById("productPrice")
+        .value
+    );
+
+    const old =
+    Number(
+        document.getElementById("productOld")
+        .value
+    );
+
+    const cat =
+    document.getElementById("productCategory")
+    .value;
+
+    const icon =
+    document.getElementById("productIcon")
+    .value.trim() || "📦";
+
+    const desc =
+    document.getElementById("productDescription")
+    .value.trim();
+
+    const status =
+    document.getElementById("productStatus");
+
+    if(!name || !price){
+
+        status.style.color =
+        "#ef4444";
+
+        status.textContent =
+        "Enter a product name and price.";
+
+        return;
+    }
+
+    const product = {
+
+        name:name,
+
+        price:price,
+
+        old:old || price,
+
+        cat:cat,
+
+        icon:icon,
+
+        desc:desc
+
+    };
+
+    try{
+
+        if(editingId){
+
+            await set(
+                ref(db,"products/" + editingId),
+                product
+            );
+
+            status.style.color =
+            "#15803d";
+
+            status.textContent =
+            "Product updated successfully.";
+
+        }else{
+
+            const newProduct =
+            push(ref(db,"products"));
+
+            await set(
+                newProduct,
+                product
+            );
+
+            status.style.color =
+            "#15803d";
+
+            status.textContent =
+            "Product added successfully.";
 
         }
 
-      } finally {
+        clearForm();
 
-        loginButton.disabled = false;
+        loadProducts();
 
-        loginButton.textContent = "Login";
-
-      }
-
-    });
-
-
-    /* CHECK LOGIN STATUS */
-
-    onAuthStateChanged(auth, (user) => {
-
-      if (user) {
-
-        loginPage.style.display = "none";
-
-        adminPage.style.display = "block";
-
-        adminEmail.textContent =
-          user.email || "Admin";
-
-      } else {
-
-        loginPage.style.display = "flex";
-
-        adminPage.style.display = "none";
-
-        adminEmail.textContent = "";
-
-      }
-
-    });
-
-
-    /* LOGOUT */
-
-    logoutButton.addEventListener("click", async () => {
-
-      try {
-
-        await signOut(auth);
-
-      } catch (error) {
+    }catch(error){
 
         console.error(error);
 
-      }
+        status.style.color =
+        "#ef4444";
 
-    });
+        status.textContent =
+        "Could not save product. Check Firebase rules.";
 
-  </script>
+    }
+
+};
+
+
+/* EDIT PRODUCT */
+
+window.editProduct = async function(id){
+
+    try{
+
+        const snapshot =
+        await get(
+            ref(db,"products/" + id)
+        );
+
+        if(!snapshot.exists()){
+
+            alert("Product not found.");
+
+            return;
+        }
+
+        const p =
+        snapshot.val();
+
+        editingId = id;
+
+        document.getElementById("productName")
+        .value = p.name || "";
+
+        document.getElementById("productPrice")
+        .value = p.price || "";
+
+        document.getElementById("productOld")
+        .value = p.old || "";
+
+        document.getElementById("productCategory")
+        .value = p.cat || "Electronics";
+
+        document.getElementById("productIcon")
+        .value = p.icon || "";
+
+        document.getElementById("productDescription")
+        .value = p.desc || "";
+
+        document.getElementById("formTitle")
+        .textContent =
+        "Edit Product";
+
+        document.getElementById("saveButton")
+        .textContent =
+        "Update Product";
+
+        document.getElementById("cancelButton")
+        .classList.remove("hidden");
+
+        window.scrollTo({
+            top:0,
+            behavior:"smooth"
+        });
+
+    }catch(error){
+
+        console.error(error);
+
+        alert("Could not load product.");
+
+    }
+
+};
+
+
+/* DELETE PRODUCT */
+
+window.deleteProduct = async function(id){
+
+    if(
+        !confirm(
+            "Are you sure you want to delete this product?"
+        )
+    ){
+
+        return;
+
+    }
+
+    try{
+
+        await remove(
+            ref(db,"products/" + id)
+        );
+
+        loadProducts();
+
+    }catch(error){
+
+        console.error(error);
+
+        alert(
+            "Could not delete product."
+        );
+
+    }
+
+};
+
+
+/* CANCEL EDIT */
+
+window.cancelEdit = function(){
+
+    clearForm();
+
+};
+
+
+/* CLEAR FORM */
+
+function clearForm(){
+
+    editingId = null;
+
+    document.getElementById("productName")
+    .value = "";
+
+    document.getElementById("productPrice")
+    .value = "";
+
+    document.getElementById("productOld")
+    .value = "";
+
+    document.getElementById("productIcon")
+    .value = "";
+
+    document.getElementById("productDescription")
+    .value = "";
+
+    document.getElementById("formTitle")
+    .textContent =
+    "Add Product";
+
+    document.getElementById("saveButton")
+    .textContent =
+    "Add Product";
+
+    document.getElementById("cancelButton")
+    .classList.add("hidden");
+
+}
+
+
+/* ESCAPE HTML */
+
+function escapeHtml(value){
+
+    return String(value)
+
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+</script>
 
 </body>
 </html>
