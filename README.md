@@ -1,292 +1,452 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>NovaStore Admin</title>
+<head>
+
+<meta charset="utf-8">
+
+<meta
+ name="viewport"
+ content="width=device-width,initial-scale=1"
+>
+
+<title>NovaStore</title>
 
 <style>
+
 *{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-    font-family:Arial,sans-serif;
+ box-sizing:border-box;
+ font-family:Arial,sans-serif
 }
 
 body{
-    background:#f5f6f8;
-    color:#222;
+ margin:0;
+ background:#f5f6f8;
+ color:#172033
 }
 
 header{
-    background:#111827;
-    color:white;
-    padding:18px 20px;
+ background:#111827;
+ color:#fff;
+ position:sticky;
+ top:0;
+ z-index:5
 }
 
-header h1{
-    max-width:1100px;
-    margin:auto;
+.top{
+ max-width:1100px;
+ margin:auto;
+ padding:14px;
+ display:flex;
+ gap:10px;
+ align-items:center
 }
 
-.container{
-    max-width:1100px;
-    margin:auto;
-    padding:25px 15px;
+.logo{
+ font-size:22px;
+ font-weight:800;
+ flex:1
 }
 
-.box{
-    background:white;
-    padding:20px;
-    border-radius:12px;
-    margin-bottom:20px;
-    box-shadow:0 2px 10px #00000012;
+.search{
+ flex:2;
+ padding:11px;
+ border-radius:8px;
+ border:0
 }
 
-input,select{
-    width:100%;
-    padding:12px;
-    border:1px solid #ccc;
-    border-radius:7px;
-    margin:6px 0 12px;
+.btn{
+ padding:10px 13px;
+ border:0;
+ border-radius:8px;
+ cursor:pointer
 }
 
-button{
-    border:0;
-    border-radius:7px;
-    padding:11px 15px;
-    cursor:pointer;
+.hero{
+ max-width:1100px;
+ margin:18px auto;
+ padding:25px
 }
 
-.primary{
-    background:#22c55e;
-    color:white;
-    width:100%;
-    font-weight:bold;
+.hero div{
+ background:#111827;
+ color:#fff;
+ padding:30px;
+ border-radius:18px
 }
 
-.dark{
-    background:#111827;
-    color:white;
+.filters,
+.products{
+ max-width:1100px;
+ margin:auto;
+ padding:0 15px
 }
 
-.danger{
-    background:#ef4444;
-    color:white;
+.filters{
+ margin-bottom:15px
 }
 
-.hidden{
-    display:none;
+.filters select{
+ padding:10px;
+ border:1px solid #ddd;
+ border-radius:8px
 }
 
-.product{
-    border:1px solid #ddd;
-    border-radius:10px;
-    padding:15px;
-    margin-top:12px;
-    display:flex;
-    justify-content:space-between;
-    gap:15px;
-    align-items:center;
+.products{
+ display:grid;
+ grid-template-columns:
+ repeat(auto-fill,minmax(210px,1fr));
+ gap:15px;
+ padding-bottom:40px
 }
 
-.product-info{
-    flex:1;
+.card{
+ background:#fff;
+ border-radius:13px;
+ overflow:hidden;
+ box-shadow:0 2px 9px #0001
 }
 
-.product-info h3{
-    margin-bottom:6px;
+.pic{
+ height:175px;
+ background:#eee;
+ display:flex;
+ align-items:center;
+ justify-content:center
 }
 
-.product-info p{
-    color:#666;
-    font-size:14px;
+.pic img{
+ width:100%;
+ height:100%;
+ object-fit:cover
+}
+
+.info{
+ padding:14px
+}
+
+.cat{
+ font-size:12px;
+ color:#687386
+}
+
+.name{
+ font-weight:bold;
+ margin:7px 0
+}
+
+.old{
+ text-decoration:line-through;
+ color:#888;
+ font-size:13px
+}
+
+.price{
+ font-size:19px;
+ font-weight:bold;
+ margin:6px 0
+}
+
+.add{
+ width:100%;
+ background:#16a34a;
+ color:white;
+ margin-top:10px
+}
+
+.modal{
+ display:none;
+ position:fixed;
+ inset:0;
+ background:#0008;
+ z-index:10;
+ padding:15px;
+ overflow:auto
+}
+
+.modal.show{
+ display:block
+}
+
+.panel{
+ background:white;
+ max-width:600px;
+ margin:30px auto;
+ padding:20px;
+ border-radius:14px
+}
+
+.field{
+ margin:10px 0
+}
+
+.field label{
+ display:block;
+ font-size:13px;
+ font-weight:bold;
+ margin-bottom:5px
+}
+
+.field input,
+.field textarea{
+ width:100%;
+ padding:11px;
+ border:1px solid #ddd;
+ border-radius:8px
 }
 
 .actions{
-    display:flex;
-    gap:7px;
+ display:flex;
+ gap:8px;
+ margin-top:15px;
+ flex-wrap:wrap
 }
 
-.status{
-    padding:12px;
-    border-radius:7px;
-    margin-bottom:15px;
-    background:#eef2ff;
+.primary{
+ background:#111827;
+ color:#fff
+}
+
+.secondary{
+ background:#e5e7eb
+}
+
+.cartrow{
+ display:flex;
+ justify-content:space-between;
+ padding:12px 0;
+ border-bottom:1px solid #eee
 }
 
 @media(max-width:650px){
-    .product{
-        flex-direction:column;
-        align-items:stretch;
-    }
 
-    .actions{
-        width:100%;
-    }
+ .top{
+  flex-wrap:wrap
+ }
 
-    .actions button{
-        flex:1;
-    }
+ .search{
+  order:3;
+  flex-basis:100%
+ }
+
+ .hero{
+  padding:10px
+ }
+
+ .products{
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+  padding:0 10px 30px
+ }
+
+ .pic{
+  height:140px
+ }
+
 }
+
 </style>
+
 </head>
+
 
 <body>
 
+
 <header>
-<h1>NovaStore Admin</h1>
-</header>
 
-<div class="container">
+<div class="top">
 
-<!-- LOGIN -->
-
-<div id="loginBox" class="box">
-
-<h2>Admin Login</h2>
-
-<br>
+<div class="logo">
+NovaStore
+</div>
 
 <input
-id="email"
-type="email"
-placeholder="Admin email"
->
-
-<input
-id="password"
-type="password"
-placeholder="Password"
+ id="search"
+ class="search"
+ placeholder="Search products"
 >
 
 <button
-class="primary"
-onclick="login()"
+ class="btn"
+ onclick="openCart()"
+>
+Cart (<span id="count">0</span>)
+</button>
+
+<button
+ class="btn"
+ id="account"
+ onclick="openAccount()"
 >
 Login
 </button>
 
-<p id="loginStatus" style="margin-top:12px;color:#ef4444"></p>
+</div>
+
+</header>
+
+
+<section class="hero">
+
+<div>
+
+<h1>
+Welcome to NovaStore
+</h1>
+
+<p>
+Quality products at great prices.
+</p>
 
 </div>
 
-
-<!-- DASHBOARD -->
-
-<div id="dashboard" class="hidden">
-
-<div class="box">
-
-<h2>Admin Dashboard</h2>
-
-<p id="adminEmail" style="margin:8px 0;color:#666"></p>
-
-<button
-class="dark"
-onclick="logout()"
->
-Logout
-</button>
-
-</div>
+</section>
 
 
-<!-- ADD PRODUCT -->
+<div class="filters">
 
-<div class="box">
+<select id="category">
 
-<h2 id="formTitle">
-Add Product
-</h2>
-
-<br>
-
-<input
-id="productName"
-type="text"
-placeholder="Product name"
->
-
-<input
-id="productPrice"
-type="number"
-placeholder="Price"
->
-
-<input
-id="productOld"
-type="number"
-placeholder="Old price"
->
-
-<select id="productCategory">
-
-<option value="Electronics">
-Electronics
-</option>
-
-<option value="Fashion">
-Fashion
-</option>
-
-<option value="Home">
-Home
-</option>
-
-<option value="Accessories">
-Accessories
+<option value="all">
+All categories
 </option>
 
 </select>
 
-<input
-id="productIcon"
-type="text"
-placeholder="Product icon e.g. 🎧"
->
-
-<input
-id="productDescription"
-type="text"
-placeholder="Product description"
->
-
-<button
-class="primary"
-onclick="saveProduct()"
-id="saveButton"
->
-Add Product
-</button>
-
-<br><br>
-
-<button
-class="dark hidden"
-onclick="cancelEdit()"
-id="cancelButton"
->
-Cancel Edit
-</button>
-
-<p id="productStatus" style="margin-top:12px"></p>
-
 </div>
 
 
-<!-- PRODUCTS -->
+<main
+ id="products"
+ class="products"
+>
 
-<div class="box">
-
-<h2>Products</h2>
-
-<div id="productsList">
+<p>
 Loading products...
+</p>
+
+</main>
+
+
+<footer
+ style="text-align:center;padding:30px;color:#687386"
+>
+
+© 2026 NovaStore
+
+</footer>
+
+
+<!-- ACCOUNT -->
+
+<div
+ id="accountModal"
+ class="modal"
+>
+
+<div class="panel">
+
+<h2>
+Customer Account
+</h2>
+
+<div class="field">
+
+<label>
+Email
+</label>
+
+<input
+ id="email"
+ type="email"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>
+Password
+</label>
+
+<input
+ id="password"
+ type="password"
+>
+
+</div>
+
+
+<div class="actions">
+
+<button
+ class="btn primary"
+ onclick="login()"
+>
+Login
+</button>
+
+<button
+ class="btn secondary"
+ onclick="register()"
+>
+Create account
+</button>
+
+<button
+ class="btn secondary"
+ onclick="closeM('accountModal')"
+>
+Close
+</button>
+
+</div>
+
+<p id="accountMsg"></p>
+
 </div>
 
 </div>
+
+
+<!-- CART -->
+
+<div
+ id="cartModal"
+ class="modal"
+>
+
+<div class="panel">
+
+<h2>
+Your Cart
+</h2>
+
+<div id="cartItems"></div>
+
+<h3 id="total"></h3>
+
+<div class="actions">
+
+<button
+ class="btn primary"
+ onclick="checkout()"
+>
+Place Order
+</button>
+
+<button
+ class="btn secondary"
+ onclick="closeM('cartModal')"
+>
+Close
+</button>
+
+</div>
+
+<p id="cartMsg"></p>
 
 </div>
 
@@ -295,551 +455,645 @@ Loading products...
 
 <script type="module">
 
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
-    getAuth,
-    signInWithEmailAndPassword,
-    onAuthStateChanged,
-    signOut
+ initializeApp
 }
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
 
 import {
-    getDatabase,
-    ref,
-    push,
-    set,
-    get,
-    remove
+ getDatabase,
+ ref,
+ onValue,
+ push,
+ set
 }
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 
-/* FIREBASE */
-
-const firebaseConfig = {
-
-    apiKey:
-    "AIzaSyCNrU3igTkkcQ0Z6Zq1dluKw_s_3yHovjE",
-
-    authDomain:
-    "novastore-6fd18.firebaseapp.com",
-
-    databaseURL:
-    "https://novastore-6fd18-default-rtdb.asia-southeast1.firebasedatabase.app",
-
-    projectId:
-    "novastore-6fd18",
-
-    storageBucket:
-    "novastore-6fd18.firebasestorage.app",
-
-    messagingSenderId:
-    "783420364153",
-
-    appId:
-    "1:783420364153:web:1b56b655e3e804726d8ba8",
-
-    measurementId:
-    "G-Q760SBLPLT"
-};
+import {
+ getAuth,
+ onAuthStateChanged,
+ signInWithEmailAndPassword,
+ createUserWithEmailAndPassword
+}
+from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
-const app = initializeApp(firebaseConfig);
+const firebaseConfig={
 
-const auth = getAuth(app);
+ apiKey:
+ "AIzaSyCNrU3igTkkcQ0Z6Zq1dluKw_s_3yHovE",
 
-const db = getDatabase(app);
+ authDomain:
+ "novastore-6fd18.firebaseapp.com",
 
+ databaseURL:
+ "https://novastore-6fd18-default-rtdb.asia-southeast1.firebasedatabase.app",
 
-/* ADMIN EMAIL */
+ projectId:
+ "novastore-6fd18",
 
-const ADMIN_EMAIL =
-"Sbgodstime@gmail.com";
+ storageBucket:
+ "novastore-6fd18.firebasestorage.app",
 
+ messagingSenderId:
+ "783420364153",
 
-/* EDITING */
+ appId:
+ "1:783420364153:web:1b56b655e3e804726d8ba8",
 
-let editingId = null;
-
-
-/* LOGIN */
-
-window.login = async function(){
-
-    const email =
-    document.getElementById("email").value.trim();
-
-    const password =
-    document.getElementById("password").value;
-
-    const status =
-    document.getElementById("loginStatus");
-
-    status.textContent = "";
-
-    if(!email || !password){
-
-        status.textContent =
-        "Enter your email and password.";
-
-        return;
-    }
-
-    try{
-
-        const result =
-        await signInWithEmailAndPassword(
-            auth,
-            email,
-            password
-        );
-
-        if(
-            result.user.email.toLowerCase() !==
-            ADMIN_EMAIL.toLowerCase()
-        ){
-
-            await signOut(auth);
-
-            status.textContent =
-            "This account is not authorized as an admin.";
-
-            return;
-        }
-
-    }catch(error){
-
-        console.error(error);
-
-        status.textContent =
-        "Login failed. Check your email and password.";
-
-    }
+ measurementId:
+ "G-Q760SBLPLT"
 
 };
 
 
-/* AUTH STATE */
-
-onAuthStateChanged(auth,user => {
-
-    if(
-        user &&
-        user.email &&
-        user.email.toLowerCase() ===
-        ADMIN_EMAIL.toLowerCase()
-    ){
-
-        document
-        .getElementById("loginBox")
-        .classList.add("hidden");
-
-        document
-        .getElementById("dashboard")
-        .classList.remove("hidden");
-
-        document
-        .getElementById("adminEmail")
-        .textContent =
-        "Logged in as: " + user.email;
-
-        loadProducts();
-
-    }else{
-
-        document
-        .getElementById("loginBox")
-        .classList.remove("hidden");
-
-        document
-        .getElementById("dashboard")
-        .classList.add("hidden");
-
-    }
-
-});
+const app=
+initializeApp(firebaseConfig);
 
 
-/* LOGOUT */
-
-window.logout = async function(){
-
-    await signOut(auth);
-
-};
+const db=
+getDatabase(app);
 
 
-/* LOAD PRODUCTS */
+const auth=
+getAuth(app);
 
-async function loadProducts(){
 
-    const list =
-    document.getElementById("productsList");
+let products={};
 
-    list.innerHTML =
-    "Loading products...";
+let cart=
+JSON.parse(
+ localStorage.getItem("novaCart")||"[]"
+);
 
-    try{
+let user=null;
 
-        const snapshot =
-        await get(ref(db,"products"));
 
-        if(!snapshot.exists()){
+const money=n=>
+"₦"+Number(n||0)
+.toLocaleString("en-NG");
 
-            list.innerHTML =
-            "<p>No products yet.</p>";
 
-            return;
-        }
+const safe=s=>
+String(s??"")
+.replace(
+ /[&<>"']/g,
+ c=>({
+  "&":"&amp;",
+  "<":"&lt;",
+  ">":"&gt;",
+  '"':"&quot;",
+  "'":"&#039;"
+ }[c])
+);
 
-        const data =
-        snapshot.val();
 
-        list.innerHTML = "";
+onValue(
+ ref(db,"products"),
+ snapshot=>{
 
-        Object.entries(data).forEach(
-            ([id,p]) => {
+  products=
+  snapshot.val()||{};
 
-                const div =
-                document.createElement("div");
+  renderCats();
 
-                div.className =
-                "product";
+  render();
 
-                div.innerHTML = `
+ }
+);
 
-                    <div class="product-info">
 
-                        <h3>
-                            ${escapeHtml(p.icon || "📦")}
-                            ${escapeHtml(p.name || "")}
-                        </h3>
+onAuthStateChanged(
+ auth,
+ u=>{
 
-                        <p>
-                            Category:
-                            ${escapeHtml(p.cat || "")}
-                        </p>
+  user=u;
 
-                        <p>
-                            Price:
-                            ₦${Number(p.price || 0).toLocaleString("en-NG")}
-                        </p>
+  account.textContent=
+  u?"Account":"Login";
 
-                    </div>
+ }
+);
 
-                    <div class="actions">
 
-                        <button
-                            class="dark"
-                            onclick="editProduct('${id}')"
-                        >
-                            Edit
-                        </button>
+function renderCats(){
 
-                        <button
-                            class="danger"
-                            onclick="deleteProduct('${id}')"
-                        >
-                            Delete
-                        </button>
+ let old=
+ category.value;
 
-                    </div>
-                `;
+ let categories=
+ [
+  ...new Set(
+   Object.values(products)
+   .map(p=>p.category)
+   .filter(Boolean)
+  )
+ ];
 
-                list.appendChild(div);
 
-            }
-        );
+ category.innerHTML=
+ '<option value="all">All categories</option>'+
+ categories
+ .map(
+  x=>`<option>${safe(x)}</option>`
+ )
+ .join("");
 
-    }catch(error){
 
-        console.error(error);
-
-        list.innerHTML =
-        "<p style='color:red'>Could not load products.</p>";
-
-    }
+ category.value=
+ categories.includes(old)
+ ?old
+ :"all";
 
 }
 
 
-/* SAVE PRODUCT */
+function render(){
 
-window.saveProduct = async function(){
+ let q=
+ search.value.toLowerCase();
 
-    const name =
-    document.getElementById("productName")
-    .value.trim();
+ let c=
+ category.value;
 
-    const price =
-    Number(
-        document.getElementById("productPrice")
-        .value
-    );
 
-    const old =
-    Number(
-        document.getElementById("productOld")
-        .value
-    );
+ let list=
+ Object.entries(products)
+ .filter(
+  ([id,p])=>
+  (p.name||"")
+  .toLowerCase()
+  .includes(q)
+  &&
+  (c==="all"||p.category===c)
+  &&
+  p.available!==false
+ );
 
-    const cat =
-    document.getElementById("productCategory")
-    .value;
 
-    const icon =
-    document.getElementById("productIcon")
-    .value.trim() || "📦";
+ productsBox.innerHTML=
+ list.length
 
-    const desc =
-    document.getElementById("productDescription")
-    .value.trim();
+ ?
 
-    const status =
-    document.getElementById("productStatus");
+ list.map(
+ ([id,p])=>`
 
-    if(!name || !price){
+ <article class="card">
 
-        status.style.color =
-        "#ef4444";
+ <div class="pic">
 
-        status.textContent =
-        "Enter a product name and price.";
+ ${
+  p.image
 
-        return;
-    }
+  ?
 
-    const product = {
+  `<img
+  src="${safe(p.image)}"
+  onerror="this.style.display='none'"
+  >`
 
-        name:name,
+  :
 
-        price:price,
+  "🛍️"
+ }
 
-        old:old || price,
+ </div>
 
-        cat:cat,
 
-        icon:icon,
+ <div class="info">
 
-        desc:desc
+ <div class="cat">
 
-    };
+ ${safe(p.category||"General")}
 
-    try{
+ </div>
 
-        if(editingId){
 
-            await set(
-                ref(db,"products/" + editingId),
-                product
-            );
+ <div class="name">
 
-            status.style.color =
-            "#15803d";
+ ${safe(p.name)}
 
-            status.textContent =
-            "Product updated successfully.";
+ </div>
 
-        }else{
 
-            const newProduct =
-            push(ref(db,"products"));
+ ${
+  p.oldPrice
 
-            await set(
-                newProduct,
-                product
-            );
+  ?
 
-            status.style.color =
-            "#15803d";
+  `<div class="old">
+  ${money(p.oldPrice)}
+  </div>`
 
-            status.textContent =
-            "Product added successfully.";
+  :
 
-        }
+  ""
+ }
 
-        clearForm();
 
-        loadProducts();
+ <div class="price">
 
-    }catch(error){
+ ${money(p.price)}
 
-        console.error(error);
+ </div>
 
-        status.style.color =
-        "#ef4444";
 
-        status.textContent =
-        "Could not save product. Check Firebase rules.";
+ <small>
 
-    }
+ ${safe(
+  p.description||
+  "Available now"
+ )}
 
-};
+ </small>
 
 
-/* EDIT PRODUCT */
+ <button
+ class="btn add"
+ onclick="add('${id}')"
+ >
 
-window.editProduct = async function(id){
+ Add to Cart
 
-    try{
+ </button>
 
-        const snapshot =
-        await get(
-            ref(db,"products/" + id)
-        );
+ </div>
 
-        if(!snapshot.exists()){
+ </article>
 
-            alert("Product not found.");
+ `
+ ).join("")
 
-            return;
-        }
+ :
 
-        const p =
-        snapshot.val();
-
-        editingId = id;
-
-        document.getElementById("productName")
-        .value = p.name || "";
-
-        document.getElementById("productPrice")
-        .value = p.price || "";
-
-        document.getElementById("productOld")
-        .value = p.old || "";
-
-        document.getElementById("productCategory")
-        .value = p.cat || "Electronics";
-
-        document.getElementById("productIcon")
-        .value = p.icon || "";
-
-        document.getElementById("productDescription")
-        .value = p.desc || "";
-
-        document.getElementById("formTitle")
-        .textContent =
-        "Edit Product";
-
-        document.getElementById("saveButton")
-        .textContent =
-        "Update Product";
-
-        document.getElementById("cancelButton")
-        .classList.remove("hidden");
-
-        window.scrollTo({
-            top:0,
-            behavior:"smooth"
-        });
-
-    }catch(error){
-
-        console.error(error);
-
-        alert("Could not load product.");
-
-    }
-
-};
-
-
-/* DELETE PRODUCT */
-
-window.deleteProduct = async function(id){
-
-    if(
-        !confirm(
-            "Are you sure you want to delete this product?"
-        )
-    ){
-
-        return;
-
-    }
-
-    try{
-
-        await remove(
-            ref(db,"products/" + id)
-        );
-
-        loadProducts();
-
-    }catch(error){
-
-        console.error(error);
-
-        alert(
-            "Could not delete product."
-        );
-
-    }
-
-};
-
-
-/* CANCEL EDIT */
-
-window.cancelEdit = function(){
-
-    clearForm();
-
-};
-
-
-/* CLEAR FORM */
-
-function clearForm(){
-
-    editingId = null;
-
-    document.getElementById("productName")
-    .value = "";
-
-    document.getElementById("productPrice")
-    .value = "";
-
-    document.getElementById("productOld")
-    .value = "";
-
-    document.getElementById("productIcon")
-    .value = "";
-
-    document.getElementById("productDescription")
-    .value = "";
-
-    document.getElementById("formTitle")
-    .textContent =
-    "Add Product";
-
-    document.getElementById("saveButton")
-    .textContent =
-    "Add Product";
-
-    document.getElementById("cancelButton")
-    .classList.add("hidden");
+ "<p>No products found.</p>";
 
 }
 
 
-/* ESCAPE HTML */
+const productsBox=
+document.getElementById("products");
 
-function escapeHtml(value){
 
-    return String(value)
+search.oninput=
+render;
 
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+
+category.onchange=
+render;
+
+
+window.add=id=>{
+
+ let item=
+ cart.find(x=>x.id===id);
+
+
+ if(item){
+
+  item.qty++;
+
+ }else{
+
+  cart.push({
+   id:id,
+   qty:1
+  });
+
+ }
+
+
+ save();
+
+ alert("Added to cart");
+
+};
+
+
+function save(){
+
+ localStorage.setItem(
+  "novaCart",
+  JSON.stringify(cart)
+ );
+
+
+ count.textContent=
+ cart.reduce(
+  (a,x)=>a+x.qty,
+  0
+ );
 
 }
+
+
+window.openCart=()=>{
+
+ cartItems.innerHTML=
+ cart.length
+
+ ?
+
+ cart.map(
+ x=>{
+
+  let p=
+  products[x.id];
+
+  if(!p)return"";
+
+
+  return `
+
+  <div class="cartrow">
+
+  <span>
+
+  ${safe(p.name)}
+
+  <br>
+
+  ${money(p.price)}
+  × ${x.qty}
+
+  </span>
+
+
+  <span>
+
+  <button
+  class="btn secondary"
+  onclick="qty('${x.id}',-1)"
+  >
+  −
+  </button>
+
+  <button
+  class="btn secondary"
+  onclick="qty('${x.id}',1)"
+  >
+  +
+  </button>
+
+  </span>
+
+  </div>
+
+  `;
+
+ }).join("")
+
+ :
+
+ "<p>Your cart is empty.</p>";
+
+
+ let totalAmount=
+ cart.reduce(
+  (a,x)=>
+  a+
+  (products[x.id]?.price||0)*
+  x.qty,
+  0
+ );
+
+
+ total.textContent=
+ "Total: "+
+ money(totalAmount);
+
+
+ cartMsg.textContent="";
+
+
+ cartModal.classList.add("show");
+
+};
+
+
+window.qty=(id,n)=>{
+
+ let item=
+ cart.find(x=>x.id===id);
+
+
+ if(item){
+
+  item.qty+=n;
+
+
+  if(item.qty<1){
+
+   cart=
+   cart.filter(
+    y=>y.id!==id
+   );
+
+  }
+
+ }
+
+
+ save();
+
+ openCart();
+
+};
+
+
+window.checkout=async()=>{
+
+ if(!cart.length){
+
+  cartMsg.textContent=
+  "Your cart is empty.";
+
+  return;
+
+ }
+
+
+ if(!user){
+
+  cartMsg.textContent=
+  "Please login first.";
+
+  return;
+
+ }
+
+
+ let items=
+ cart.map(
+ x=>({
+
+  productId:x.id,
+
+  name:
+  products[x.id]?.name||"",
+
+  price:
+  Number(
+   products[x.id]?.price||0
+  ),
+
+  quantity:x.qty
+
+ })
+ );
+
+
+ let totalAmount=
+ items.reduce(
+  (a,x)=>
+  a+
+  x.price*x.quantity,
+  0
+ );
+
+
+ let orderRef=
+ push(ref(db,"orders"));
+
+
+ await set(
+  orderRef,
+  {
+
+   userId:
+   user.uid,
+
+   email:
+   user.email,
+
+   items:
+   items,
+
+   total:
+   totalAmount,
+
+   status:
+   "pending",
+
+   createdAt:
+   Date.now()
+
+  }
+ );
+
+
+ cart=[];
+
+ save();
+
+
+ cartMsg.textContent=
+ "Order placed successfully.";
+
+};
+
+
+window.openAccount=()=>{
+
+ accountModal.classList.add("show");
+
+};
+
+
+window.closeM=id=>{
+
+ document
+ .getElementById(id)
+ .classList.remove("show");
+
+};
+
+
+window.login=async()=>{
+
+ try{
+
+  await signInWithEmailAndPassword(
+   auth,
+   email.value,
+   password.value
+  );
+
+
+  accountMsg.textContent=
+  "Login successful.";
+
+
+  setTimeout(
+   ()=>closeM("accountModal"),
+   600
+  );
+
+
+ }catch(e){
+
+  accountMsg.textContent=
+  e.message;
+
+ }
+
+};
+
+
+window.register=async()=>{
+
+ try{
+
+  let r=
+  await createUserWithEmailAndPassword(
+   auth,
+   email.value,
+   password.value
+  );
+
+
+  await set(
+   ref(db,"users/"+r.user.uid),
+   {
+
+    email:
+    r.user.email,
+
+    createdAt:
+    Date.now()
+
+   }
+  );
+
+
+  accountMsg.textContent=
+  "Account created successfully.";
+
+
+  setTimeout(
+   ()=>closeM("accountModal"),
+   600
+  );
+
+
+ }catch(e){
+
+  accountMsg.textContent=
+  e.message;
+
+ }
+
+};
+
+
+save();
 
 </script>
 
