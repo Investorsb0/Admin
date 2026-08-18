@@ -1,19 +1,12 @@
 <!doctype html>
 <html lang="en">
-
 <head>
-
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
-<meta
- name="viewport"
- content="width=device-width,initial-scale=1"
->
-
-<title>NovaStore</title>
+<title>NovaStore Admin</title>
 
 <style>
-
 *{
  box-sizing:border-box;
  font-family:Arial,sans-serif
@@ -21,159 +14,92 @@
 
 body{
  margin:0;
- background:#f5f6f8;
+ background:#f3f4f6;
  color:#172033
 }
 
 header{
  background:#111827;
  color:#fff;
- position:sticky;
- top:0;
- z-index:5
+ padding:15px
+}
+
+.wrap{
+ max-width:1100px;
+ margin:auto;
+ padding:15px
 }
 
 .top{
- max-width:1100px;
- margin:auto;
- padding:14px;
  display:flex;
- gap:10px;
- align-items:center
+ align-items:center;
+ gap:10px
 }
 
-.logo{
- font-size:22px;
- font-weight:800;
+.top h1{
  flex:1
 }
 
-.search{
- flex:2;
- padding:11px;
- border-radius:8px;
- border:0
-}
-
-.btn{
- padding:10px 13px;
- border:0;
- border-radius:8px;
- cursor:pointer
-}
-
-.hero{
- max-width:1100px;
- margin:18px auto;
- padding:25px
-}
-
-.hero div{
- background:#111827;
- color:#fff;
- padding:30px;
- border-radius:18px
-}
-
-.filters,
-.products{
- max-width:1100px;
- margin:auto;
- padding:0 15px
-}
-
-.filters{
+.box{
+ background:#fff;
+ border-radius:13px;
+ padding:18px;
+ box-shadow:0 2px 9px #0001;
  margin-bottom:15px
 }
 
-.filters select{
- padding:10px;
- border:1px solid #ddd;
- border-radius:8px
-}
-
-.products{
+.stats{
  display:grid;
- grid-template-columns:
- repeat(auto-fill,minmax(210px,1fr));
- gap:15px;
- padding-bottom:40px
+ grid-template-columns:repeat(4,1fr);
+ gap:10px
 }
 
-.card{
+.stat{
  background:#fff;
- border-radius:13px;
- overflow:hidden;
- box-shadow:0 2px 9px #0001
-}
-
-.pic{
- height:175px;
- background:#eee;
- display:flex;
- align-items:center;
- justify-content:center
-}
-
-.pic img{
- width:100%;
- height:100%;
- object-fit:cover
-}
-
-.info{
- padding:14px
-}
-
-.cat{
- font-size:12px;
- color:#687386
-}
-
-.name{
- font-weight:bold;
- margin:7px 0
-}
-
-.old{
- text-decoration:line-through;
- color:#888;
- font-size:13px
-}
-
-.price{
- font-size:19px;
- font-weight:bold;
- margin:6px 0
-}
-
-.add{
- width:100%;
- background:#16a34a;
- color:white;
- margin-top:10px
-}
-
-.modal{
- display:none;
- position:fixed;
- inset:0;
- background:#0008;
- z-index:10;
  padding:15px;
+ border-radius:12px
+}
+
+.stat b{
+ display:block;
+ font-size:25px;
+ margin-top:5px
+}
+
+.tabs{
+ display:flex;
+ gap:8px;
+ margin-bottom:15px;
  overflow:auto
 }
 
-.modal.show{
- display:block
+.btn{
+ border:0;
+ border-radius:8px;
+ padding:10px 13px;
+ background:#111827;
+ color:#fff;
+ cursor:pointer
 }
 
-.panel{
- background:white;
- max-width:600px;
- margin:30px auto;
- padding:20px;
- border-radius:14px
+.green{
+ background:#16a34a
+}
+
+.red{
+ background:#ef4444
+}
+
+.gray{
+ background:#6b7280
+}
+
+section{
+ display:none
+}
+
+section.active{
+ display:block
 }
 
 .field{
@@ -187,99 +113,154 @@ header{
  margin-bottom:5px
 }
 
-.field input,
-.field textarea{
+input,textarea,select{
  width:100%;
  padding:11px;
  border:1px solid #ddd;
  border-radius:8px
 }
 
-.actions{
+.row{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:10px
+}
+
+.product{
  display:flex;
- gap:8px;
- margin-top:15px;
- flex-wrap:wrap
-}
-
-.primary{
- background:#111827;
- color:#fff
-}
-
-.secondary{
- background:#e5e7eb
-}
-
-.cartrow{
- display:flex;
- justify-content:space-between;
+ align-items:center;
+ gap:10px;
  padding:12px 0;
  border-bottom:1px solid #eee
 }
 
+.product img{
+ width:60px;
+ height:60px;
+ object-fit:cover;
+ border-radius:8px
+}
+
+.grow{
+ flex:1
+}
+
+.table{
+ overflow:auto
+}
+
+table{
+ width:100%;
+ border-collapse:collapse
+}
+
+th,td{
+ padding:10px;
+ border-bottom:1px solid #eee;
+ text-align:left;
+ font-size:13px
+}
+
+#login{
+ max-width:420px;
+ margin:70px auto
+}
+
+.note{
+ background:#eef2ff;
+ padding:10px;
+ border-radius:8px;
+ font-size:13px;
+ margin-bottom:12px
+}
+
+#lm,
+#pm{
+ margin-top:12px
+}
+
 @media(max-width:650px){
 
- .top{
+ .stats{
+  grid-template-columns:1fr 1fr
+ }
+
+ .row{
+  grid-template-columns:1fr
+ }
+
+ .product{
   flex-wrap:wrap
  }
 
- .search{
-  order:3;
-  flex-basis:100%
+ .product button{
+  flex:1
  }
-
- .hero{
-  padding:10px
- }
-
- .products{
-  grid-template-columns:repeat(2,1fr);
-  gap:10px;
-  padding:0 10px 30px
- }
-
- .pic{
-  height:140px
- }
-
 }
-
 </style>
-
 </head>
-
 
 <body>
 
+<!-- LOGIN -->
+
+<div id="login" class="box">
+
+<h2>NovaStore Admin</h2>
+
+<p>Sign in with the authorized admin account.</p>
+
+<div class="field">
+
+<label>Email</label>
+
+<input
+ id="le"
+ type="email"
+ autocomplete="username"
+>
+
+</div>
+
+<div class="field">
+
+<label>Password</label>
+
+<input
+ id="lp"
+ type="password"
+ autocomplete="current-password"
+>
+
+</div>
+
+<button
+ class="btn green"
+ onclick="adminLogin()"
+>
+Login
+</button>
+
+<p id="lm"></p>
+
+</div>
+
+
+<!-- ADMIN DASHBOARD -->
+
+<div id="app" style="display:none">
 
 <header>
 
-<div class="top">
+<div class="wrap top">
 
-<div class="logo">
-NovaStore
-</div>
-
-<input
- id="search"
- class="search"
- placeholder="Search products"
->
+<h1>NovaStore Admin</h1>
 
 <button
- class="btn"
- onclick="openCart()"
+ class="btn gray"
+ onclick="logout()"
 >
-Cart (<span id="count">0</span>)
-</button>
-
-<button
- class="btn"
- id="account"
- onclick="openAccount()"
->
-Login
+Logout
 </button>
 
 </div>
@@ -287,166 +268,226 @@ Login
 </header>
 
 
-<section class="hero">
+<div class="wrap">
 
-<div>
 
-<h1>
-Welcome to NovaStore
-</h1>
+<!-- STATS -->
 
-<p>
-Quality products at great prices.
-</p>
+<div class="stats">
+
+<div class="stat">
+Products
+<b id="sp">0</b>
+</div>
+
+<div class="stat">
+Orders
+<b id="so">0</b>
+</div>
+
+<div class="stat">
+Customers
+<b id="sc">0</b>
+</div>
+
+<div class="stat">
+Pending
+<b id="sn">0</b>
+</div>
+
+</div>
+
+
+<!-- TABS -->
+
+<div class="tabs">
+
+<button
+ class="btn green"
+ onclick="tab('psec')"
+>
+Products
+</button>
+
+<button
+ class="btn"
+ onclick="tab('osec')"
+>
+Orders
+</button>
+
+<button
+ class="btn"
+ onclick="tab('csec')"
+>
+Customers
+</button>
+
+</div>
+
+
+<!-- PRODUCTS -->
+
+<section
+ id="psec"
+ class="active"
+>
+
+<div class="box">
+
+<h2 id="ft">
+Add Product
+</h2>
+
+<div class="note">
+Save here → Firebase → the public NovaStore website updates automatically.
+</div>
+
+<input
+ id="eid"
+ type="hidden"
+>
+
+
+<div class="row">
+
+<div class="field">
+
+<label>Product name</label>
+
+<input id="pn">
+
+</div>
+
+
+<div class="field">
+
+<label>Category</label>
+
+<input id="pc">
+
+</div>
+
+</div>
+
+
+<div class="row">
+
+<div class="field">
+
+<label>Price (₦)</label>
+
+<input
+ id="pp"
+ type="number"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>Old price (₦)</label>
+
+<input
+ id="po"
+ type="number"
+>
+
+</div>
+
+</div>
+
+
+<div class="field">
+
+<label>Image URL</label>
+
+<input
+ id="pi"
+ placeholder="https://..."
+>
+
+</div>
+
+
+<div class="field">
+
+<label>Description</label>
+
+<textarea
+ id="pd"
+ rows="3"
+></textarea>
+
+</div>
+
+
+<button
+ class="btn green"
+ onclick="saveProduct()"
+>
+Save Product
+</button>
+
+<button
+ class="btn gray"
+ onclick="clearForm()"
+>
+Clear
+</button>
+
+<p id="pm"></p>
+
+</div>
+
+
+<div class="box">
+
+<h2>Products</h2>
+
+<div id="plist">
+Loading...
+</div>
 
 </div>
 
 </section>
 
 
-<div class="filters">
+<!-- ORDERS -->
 
-<select id="category">
+<section id="osec">
 
-<option value="all">
-All categories
-</option>
+<div class="box">
 
-</select>
+<h2>Orders</h2>
 
-</div>
-
-
-<main
- id="products"
- class="products"
->
-
-<p>
-Loading products...
-</p>
-
-</main>
-
-
-<footer
- style="text-align:center;padding:30px;color:#687386"
->
-
-© 2026 NovaStore
-
-</footer>
-
-
-<!-- ACCOUNT -->
-
-<div
- id="accountModal"
- class="modal"
->
-
-<div class="panel">
-
-<h2>
-Customer Account
-</h2>
-
-<div class="field">
-
-<label>
-Email
-</label>
-
-<input
- id="email"
- type="email"
->
-
-</div>
-
-
-<div class="field">
-
-<label>
-Password
-</label>
-
-<input
- id="password"
- type="password"
->
-
-</div>
-
-
-<div class="actions">
-
-<button
- class="btn primary"
- onclick="login()"
->
-Login
-</button>
-
-<button
- class="btn secondary"
- onclick="register()"
->
-Create account
-</button>
-
-<button
- class="btn secondary"
- onclick="closeM('accountModal')"
->
-Close
-</button>
-
-</div>
-
-<p id="accountMsg"></p>
-
+<div id="olist">
+Loading...
 </div>
 
 </div>
 
+</section>
 
-<!-- CART -->
 
-<div
- id="cartModal"
- class="modal"
->
+<!-- CUSTOMERS -->
 
-<div class="panel">
+<section id="csec">
 
-<h2>
-Your Cart
-</h2>
+<div class="box">
 
-<div id="cartItems"></div>
+<h2>Customers</h2>
 
-<h3 id="total"></h3>
-
-<div class="actions">
-
-<button
- class="btn primary"
- onclick="checkout()"
->
-Place Order
-</button>
-
-<button
- class="btn secondary"
- onclick="closeM('cartModal')"
->
-Close
-</button>
+<div id="clist">
+Loading...
+</div>
 
 </div>
 
-<p id="cartMsg"></p>
+</section>
+
 
 </div>
 
@@ -455,36 +496,31 @@ Close
 
 <script type="module">
 
-
 import {
  initializeApp
-}
-from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
  getDatabase,
  ref,
  onValue,
  push,
- set
-}
-from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-
+ set,
+ update,
+ remove
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 import {
  getAuth,
  onAuthStateChanged,
  signInWithEmailAndPassword,
- createUserWithEmailAndPassword
-}
-from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+ signOut
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
-const firebaseConfig={
+/* FIREBASE CONFIG */
+
+const firebaseConfig = {
 
  apiKey:
  "AIzaSyCNrU3igTkkcQ0Z6Zq1dluKw_s_3yHovE",
@@ -513,587 +549,909 @@ const firebaseConfig={
 };
 
 
-const app=
-initializeApp(firebaseConfig);
+/* INITIALIZE FIREBASE */
+
+const firebaseApp =
+ initializeApp(firebaseConfig);
+
+const db =
+ getDatabase(firebaseApp);
+
+const auth =
+ getAuth(firebaseApp);
 
 
-const db=
-getDatabase(app);
+/* PAGE ELEMENTS */
+
+const loginBox =
+ document.getElementById("login");
+
+const adminApp =
+ document.getElementById("app");
+
+const emailInput =
+ document.getElementById("le");
+
+const passwordInput =
+ document.getElementById("lp");
+
+const loginMessage =
+ document.getElementById("lm");
 
 
-const auth=
-getAuth(app);
+/* ADMIN EMAIL */
+
+const ADMIN_EMAIL =
+ "sbgodstime@gmail.com";
 
 
-let products={};
+/* DATA */
 
-let cart=
-JSON.parse(
- localStorage.getItem("novaCart")||"[]"
-);
-
-let user=null;
+let products = {};
+let orders = {};
+let users = {};
 
 
-const money=n=>
-"₦"+Number(n||0)
-.toLocaleString("en-NG");
+/* MONEY */
+
+const money = n =>
+ "₦" +
+ Number(n || 0)
+ .toLocaleString("en-NG");
 
 
-const safe=s=>
-String(s??"")
-.replace(
- /[&<>"']/g,
- c=>({
-  "&":"&amp;",
-  "<":"&lt;",
-  ">":"&gt;",
-  '"':"&quot;",
-  "'":"&#039;"
- }[c])
-);
+/* SECURITY */
+
+const safe = s =>
+ String(s ?? "")
+ .replace(
+  /[&<>"']/g,
+  c => ({
+   "&":"&amp;",
+   "<":"&lt;",
+   ">":"&gt;",
+   '"':"&quot;",
+   "'":"&#039;"
+  }[c])
+ );
 
 
-onValue(
- ref(db,"products"),
- snapshot=>{
-
-  products=
-  snapshot.val()||{};
-
-  renderCats();
-
-  render();
-
- }
-);
-
+/* AUTH STATE */
 
 onAuthStateChanged(
  auth,
- u=>{
+ user => {
 
-  user=u;
+  if(
+   user &&
+   user.email &&
+   user.email.toLowerCase() ===
+   ADMIN_EMAIL.toLowerCase()
+  ){
 
-  account.textContent=
-  u?"Account":"Login";
+   loginBox.style.display =
+   "none";
+
+   adminApp.style.display =
+   "block";
+
+   start();
+
+  }else{
+
+   loginBox.style.display =
+   "block";
+
+   adminApp.style.display =
+   "none";
+
+   if(user){
+
+    signOut(auth);
+
+    loginMessage.textContent =
+    "This account is not authorized for the admin panel.";
+
+   }
+
+  }
 
  }
 );
 
 
-function renderCats(){
+/* LOGIN */
 
- let old=
- category.value;
+window.adminLogin =
+ async function(){
 
- let categories=
- [
-  ...new Set(
-   Object.values(products)
-   .map(p=>p.category)
-   .filter(Boolean)
-  )
- ];
+  const email =
+  emailInput.value.trim();
+
+  const password =
+  passwordInput.value;
+
+  loginMessage.textContent =
+  "Signing in...";
+
+  if(!email || !password){
+
+   loginMessage.textContent =
+   "Enter your email and password.";
+
+   return;
+
+  }
+
+  try{
+
+   await signInWithEmailAndPassword(
+    auth,
+    email,
+    password
+   );
+
+   loginMessage.textContent =
+   "";
+
+  }catch(error){
+
+   console.error(error);
+
+   let message =
+   error.message || "Login failed.";
+
+   if(
+    error.code ===
+    "auth/invalid-credential"
+   ){
+
+    message =
+    "Incorrect email or password.";
+
+   }
+
+   if(
+    error.code ===
+    "auth/invalid-email"
+   ){
+
+    message =
+    "Please enter a valid email address.";
+
+   }
+
+   if(
+    error.code ===
+    "auth/user-disabled"
+   ){
+
+    message =
+    "This account has been disabled.";
+
+   }
+
+   if(
+    error.code ===
+    "auth/too-many-requests"
+   ){
+
+    message =
+    "Too many login attempts. Please wait and try again.";
+
+   }
+
+   loginMessage.textContent =
+   message;
+
+  }
+
+};
 
 
- category.innerHTML=
- '<option value="all">All categories</option>'+
- categories
- .map(
-  x=>`<option>${safe(x)}</option>`
- )
- .join("");
+/* LOGOUT */
+
+window.logout =
+ function(){
+
+  signOut(auth);
+
+ };
 
 
- category.value=
- categories.includes(old)
- ?old
- :"all";
+/* START DATABASE LISTENERS */
+
+function start(){
+
+ onValue(
+  ref(db,"products"),
+  snapshot => {
+
+   products =
+   snapshot.val() || {};
+
+   renderP();
+   stats();
+
+  },
+  error => {
+
+   console.error(
+    "Products error:",
+    error
+   );
+
+  }
+ );
+
+
+ onValue(
+  ref(db,"orders"),
+  snapshot => {
+
+   orders =
+   snapshot.val() || {};
+
+   renderO();
+   stats();
+
+  },
+  error => {
+
+   console.error(
+    "Orders error:",
+    error
+   );
+
+  }
+ );
+
+
+ onValue(
+  ref(db,"users"),
+  snapshot => {
+
+   users =
+   snapshot.val() || {};
+
+   renderC();
+   stats();
+
+  },
+  error => {
+
+   console.error(
+    "Users error:",
+    error
+   );
+
+  }
+ );
 
 }
 
 
-function render(){
+/* STATS */
 
- let q=
- search.value.toLowerCase();
+function stats(){
 
- let c=
- category.value;
+ document.getElementById("sp")
+ .textContent =
+ Object.keys(products).length;
 
+ document.getElementById("so")
+ .textContent =
+ Object.keys(orders).length;
 
- let list=
- Object.entries(products)
+ document.getElementById("sc")
+ .textContent =
+ Object.keys(users).length;
+
+ document.getElementById("sn")
+ .textContent =
+ Object.values(orders)
  .filter(
-  ([id,p])=>
-  (p.name||"")
-  .toLowerCase()
-  .includes(q)
-  &&
-  (c==="all"||p.category===c)
-  &&
-  p.available!==false
- );
+  o =>
+  (o.status || "pending")
+  === "pending"
+ )
+ .length;
+
+}
 
 
- productsBox.innerHTML=
+/* TABS */
+
+window.tab =
+ function(id){
+
+  document
+  .querySelectorAll("section")
+  .forEach(
+   x =>
+   x.classList.remove("active")
+  );
+
+  document
+  .getElementById(id)
+  .classList.add("active");
+
+ };
+
+
+/* SAVE PRODUCT */
+
+window.saveProduct =
+ async function(){
+
+  const name =
+  document.getElementById("pn")
+  .value.trim();
+
+  const price =
+  Number(
+   document.getElementById("pp")
+   .value
+  );
+
+  const pm =
+  document.getElementById("pm");
+
+  if(
+   !name ||
+   !price
+  ){
+
+   pm.textContent =
+   "Product name and price are required.";
+
+   return;
+
+  }
+
+
+  const data = {
+
+   name:name,
+
+   category:
+   document.getElementById("pc")
+   .value.trim() ||
+   "General",
+
+   price:price,
+
+   oldPrice:
+   Number(
+    document.getElementById("po")
+    .value
+   ) || 0,
+
+   image:
+   document.getElementById("pi")
+   .value.trim(),
+
+   description:
+   document.getElementById("pd")
+   .value.trim(),
+
+   available:true,
+
+   updatedAt:
+   Date.now()
+
+  };
+
+
+  try{
+
+   const editId =
+   document.getElementById("eid")
+   .value;
+
+   if(editId){
+
+    await update(
+     ref(
+      db,
+      "products/" + editId
+     ),
+     data
+    );
+
+    pm.textContent =
+    "Product updated successfully.";
+
+   }else{
+
+    const productRef =
+    push(
+     ref(db,"products")
+    );
+
+    await set(
+     productRef,
+     {
+      ...data,
+      createdAt:Date.now()
+     }
+    );
+
+    pm.textContent =
+    "Product saved successfully.";
+
+   }
+
+   clearForm();
+
+  }catch(error){
+
+   console.error(error);
+
+   pm.textContent =
+   error.message ||
+   "Could not save product.";
+
+  }
+
+};
+
+
+/* CLEAR FORM */
+
+window.clearForm =
+ function(){
+
+  document.getElementById("eid")
+  .value = "";
+
+  document.getElementById("pn")
+  .value = "";
+
+  document.getElementById("pc")
+  .value = "";
+
+  document.getElementById("pp")
+  .value = "";
+
+  document.getElementById("po")
+  .value = "";
+
+  document.getElementById("pi")
+  .value = "";
+
+  document.getElementById("pd")
+  .value = "";
+
+  document.getElementById("ft")
+  .textContent =
+  "Add Product";
+
+ };
+
+
+/* RENDER PRODUCTS */
+
+function renderP(){
+
+ const plist =
+ document.getElementById("plist");
+
+ const list =
+ Object.entries(products);
+
+
+ plist.innerHTML =
  list.length
 
- ?
+ ? list.map(
+   ([id,p]) => `
 
- list.map(
- ([id,p])=>`
+   <div class="product">
 
- <article class="card">
+   ${
+    p.image
+    ?
+    `<img
+      src="${safe(p.image)}"
+      alt="${safe(p.name)}"
+    >`
+    :
+    `<div style="
+      width:60px;
+      height:60px;
+      background:#eee;
+      border-radius:8px;
+      display:flex;
+      align-items:center;
+      justify-content:center
+    ">
+      🛍️
+    </div>`
+   }
 
- <div class="pic">
+   <div class="grow">
 
- ${
-  p.image
+   <b>
+   ${safe(p.name)}
+   </b>
 
-  ?
+   <br>
 
-  `<img
-  src="${safe(p.image)}"
-  onerror="this.style.display='none'"
-  >`
+   <small>
+   ${safe(p.category)}
+   ·
+   ${money(p.price)}
+   </small>
 
-  :
+   </div>
 
-  "🛍️"
- }
+   <button
+    class="btn"
+    onclick="editP('${id}')"
+   >
+   Edit
+   </button>
 
- </div>
+   <button
+    class="btn red"
+    onclick="delP('${id}')"
+   >
+   Delete
+   </button>
 
+   </div>
 
- <div class="info">
-
- <div class="cat">
-
- ${safe(p.category||"General")}
-
- </div>
-
-
- <div class="name">
-
- ${safe(p.name)}
-
- </div>
-
-
- ${
-  p.oldPrice
-
-  ?
-
-  `<div class="old">
-  ${money(p.oldPrice)}
-  </div>`
-
-  :
-
-  ""
- }
-
-
- <div class="price">
-
- ${money(p.price)}
-
- </div>
-
-
- <small>
-
- ${safe(
-  p.description||
-  "Available now"
- )}
-
- </small>
-
-
- <button
- class="btn add"
- onclick="add('${id}')"
- >
-
- Add to Cart
-
- </button>
-
- </div>
-
- </article>
-
- `
- ).join("")
+   `
+  ).join("")
 
  :
 
- "<p>No products found.</p>";
+ "<p>No products yet.</p>";
 
 }
 
 
-const productsBox=
-document.getElementById("products");
+/* EDIT PRODUCT */
 
+window.editP =
+ function(id){
 
-search.oninput=
-render;
+  const p =
+  products[id];
 
+  if(!p)return;
 
-category.onchange=
-render;
+  document.getElementById("eid")
+  .value = id;
 
+  document.getElementById("pn")
+  .value = p.name || "";
 
-window.add=id=>{
+  document.getElementById("pc")
+  .value = p.category || "";
 
- let item=
- cart.find(x=>x.id===id);
+  document.getElementById("pp")
+  .value = p.price || "";
 
+  document.getElementById("po")
+  .value = p.oldPrice || "";
 
- if(item){
+  document.getElementById("pi")
+  .value = p.image || "";
 
-  item.qty++;
+  document.getElementById("pd")
+  .value = p.description || "";
 
- }else{
+  document.getElementById("ft")
+  .textContent =
+  "Edit Product";
 
-  cart.push({
-   id:id,
-   qty:1
+  window.scrollTo({
+   top:0,
+   behavior:"smooth"
   });
 
+ };
+
+
+/* DELETE PRODUCT */
+
+window.delP =
+ async function(id){
+
+  if(
+   confirm(
+    "Delete this product?"
+   )
+  ){
+
+   try{
+
+    await remove(
+     ref(
+      db,
+      "products/" + id
+     )
+    );
+
+   }catch(error){
+
+    console.error(error);
+
+    alert(
+     error.message
+    );
+
+   }
+
+  }
+
+ };
+
+
+/* RENDER ORDERS */
+
+function renderO(){
+
+ const olist =
+ document.getElementById("olist");
+
+ const list =
+ Object.entries(orders)
+ .sort(
+  (a,b) =>
+  (b[1].createdAt || 0) -
+  (a[1].createdAt || 0)
+ );
+
+
+ if(!list.length){
+
+  olist.innerHTML =
+  "<p>No orders yet.</p>";
+
+  return;
+
  }
 
 
- save();
+ olist.innerHTML = `
 
- alert("Added to cart");
+ <div class="table">
 
-};
+ <table>
 
+ <tr>
 
-function save(){
+ <th>Order</th>
 
- localStorage.setItem(
-  "novaCart",
-  JSON.stringify(cart)
- );
+ <th>Customer</th>
 
+ <th>Total</th>
 
- count.textContent=
- cart.reduce(
-  (a,x)=>a+x.qty,
-  0
- );
+ <th>Status</th>
+
+ </tr>
+
+ ${
+  list.map(
+   ([id,o]) => `
+
+   <tr>
+
+   <td>
+   ${safe(id.slice(-8))}
+   </td>
+
+   <td>
+   ${safe(o.email)}
+   </td>
+
+   <td>
+   ${money(o.total)}
+   </td>
+
+   <td>
+
+   <select
+    onchange="
+     changeStatus(
+      '${id}',
+      this.value
+     )
+    "
+   >
+
+   <option
+    value="pending"
+    ${
+     o.status === "pending"
+     ||
+     !o.status
+     ?
+     "selected"
+     :
+     ""
+    }
+   >
+   pending
+   </option>
+
+   <option
+    value="processing"
+    ${
+     o.status === "processing"
+     ?
+     "selected"
+     :
+     ""
+    }
+   >
+   processing
+   </option>
+
+   <option
+    value="shipped"
+    ${
+     o.status === "shipped"
+     ?
+     "selected"
+     :
+     ""
+    }
+   >
+   shipped
+   </option>
+
+   <option
+    value="delivered"
+    ${
+     o.status === "delivered"
+     ?
+     "selected"
+     :
+     ""
+    }
+   >
+   delivered
+   </option>
+
+   <option
+    value="cancelled"
+    ${
+     o.status === "cancelled"
+     ?
+     "selected"
+     :
+     ""
+    }
+   >
+   cancelled
+   </option>
+
+   </select>
+
+   </td>
+
+   </tr>
+
+   `
+  ).join("")
+ }
+
+ </table>
+
+ </div>
+
+ `;
 
 }
 
 
-window.openCart=()=>{
+/* CHANGE ORDER STATUS */
 
- cartItems.innerHTML=
- cart.length
+window.changeStatus =
+ async function(id,status){
 
- ?
+  try{
 
- cart.map(
- x=>{
+   await update(
+    ref(
+     db,
+     "orders/" + id
+    ),
+    {
+     status:status,
+     updatedAt:Date.now()
+    }
+   );
 
-  let p=
-  products[x.id];
+  }catch(error){
 
-  if(!p)return"";
+   console.error(error);
 
-
-  return `
-
-  <div class="cartrow">
-
-  <span>
-
-  ${safe(p.name)}
-
-  <br>
-
-  ${money(p.price)}
-  × ${x.qty}
-
-  </span>
-
-
-  <span>
-
-  <button
-  class="btn secondary"
-  onclick="qty('${x.id}',-1)"
-  >
-  −
-  </button>
-
-  <button
-  class="btn secondary"
-  onclick="qty('${x.id}',1)"
-  >
-  +
-  </button>
-
-  </span>
-
-  </div>
-
-  `;
-
- }).join("")
-
- :
-
- "<p>Your cart is empty.</p>";
-
-
- let totalAmount=
- cart.reduce(
-  (a,x)=>
-  a+
-  (products[x.id]?.price||0)*
-  x.qty,
-  0
- );
-
-
- total.textContent=
- "Total: "+
- money(totalAmount);
-
-
- cartMsg.textContent="";
-
-
- cartModal.classList.add("show");
-
-};
-
-
-window.qty=(id,n)=>{
-
- let item=
- cart.find(x=>x.id===id);
-
-
- if(item){
-
-  item.qty+=n;
-
-
-  if(item.qty<1){
-
-   cart=
-   cart.filter(
-    y=>y.id!==id
+   alert(
+    error.message
    );
 
   }
 
- }
+ };
 
 
- save();
+/* RENDER CUSTOMERS */
 
- openCart();
+function renderC(){
 
-};
+ const clist =
+ document.getElementById("clist");
 
-
-window.checkout=async()=>{
-
- if(!cart.length){
-
-  cartMsg.textContent=
-  "Your cart is empty.";
-
-  return;
-
- }
+ const list =
+ Object.values(users);
 
 
- if(!user){
+ if(!list.length){
 
-  cartMsg.textContent=
-  "Please login first.";
+  clist.innerHTML =
+  "<p>No customers yet.</p>";
 
   return;
 
  }
 
 
- let items=
- cart.map(
- x=>({
+ clist.innerHTML = `
 
-  productId:x.id,
+ <div class="table">
 
-  name:
-  products[x.id]?.name||"",
+ <table>
 
-  price:
-  Number(
-   products[x.id]?.price||0
-  ),
+ <tr>
 
-  quantity:x.qty
+ <th>Email</th>
 
- })
- );
+ <th>Joined</th>
 
+ </tr>
 
- let totalAmount=
- items.reduce(
-  (a,x)=>
-  a+
-  x.price*x.quantity,
-  0
- );
+ ${
+  list.map(
+   u => `
 
+   <tr>
 
- let orderRef=
- push(ref(db,"orders"));
+   <td>
+   ${safe(u.email)}
+   </td>
 
+   <td>
 
- await set(
-  orderRef,
-  {
-
-   userId:
-   user.uid,
-
-   email:
-   user.email,
-
-   items:
-   items,
-
-   total:
-   totalAmount,
-
-   status:
-   "pending",
-
-   createdAt:
-   Date.now()
-
-  }
- );
-
-
- cart=[];
-
- save();
-
-
- cartMsg.textContent=
- "Order placed successfully.";
-
-};
-
-
-window.openAccount=()=>{
-
- accountModal.classList.add("show");
-
-};
-
-
-window.closeM=id=>{
-
- document
- .getElementById(id)
- .classList.remove("show");
-
-};
-
-
-window.login=async()=>{
-
- try{
-
-  await signInWithEmailAndPassword(
-   auth,
-   email.value,
-   password.value
-  );
-
-
-  accountMsg.textContent=
-  "Login successful.";
-
-
-  setTimeout(
-   ()=>closeM("accountModal"),
-   600
-  );
-
-
- }catch(e){
-
-  accountMsg.textContent=
-  e.message;
-
- }
-
-};
-
-
-window.register=async()=>{
-
- try{
-
-  let r=
-  await createUserWithEmailAndPassword(
-   auth,
-   email.value,
-   password.value
-  );
-
-
-  await set(
-   ref(db,"users/"+r.user.uid),
-   {
-
-    email:
-    r.user.email,
-
-    createdAt:
-    Date.now()
-
+   ${
+    u.createdAt
+    ?
+    new Date(
+     u.createdAt
+    ).toLocaleString()
+    :
+    "-"
    }
-  );
 
+   </td>
 
-  accountMsg.textContent=
-  "Account created successfully.";
+   </tr>
 
-
-  setTimeout(
-   ()=>closeM("accountModal"),
-   600
-  );
-
-
- }catch(e){
-
-  accountMsg.textContent=
-  e.message;
-
+   `
+  ).join("")
  }
 
-};
+ </table>
 
+ </div>
 
-save();
+ `;
+
+ }
 
 </script>
 
