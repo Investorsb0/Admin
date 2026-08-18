@@ -1,493 +1,292 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>NovaStore Admin</title>
 
 <style>
 *{
- box-sizing:border-box;
- font-family:Arial,sans-serif
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,sans-serif;
 }
 
 body{
- margin:0;
- background:#f3f4f6;
- color:#172033
+    background:#f5f6f8;
+    color:#222;
 }
 
 header{
- background:#111827;
- color:#fff;
- padding:15px
+    background:#111827;
+    color:white;
+    padding:18px 20px;
 }
 
-.wrap{
- max-width:1100px;
- margin:auto;
- padding:15px
+header h1{
+    max-width:1100px;
+    margin:auto;
 }
 
-.top{
- display:flex;
- align-items:center;
- gap:10px
-}
-
-.top h1{
- flex:1
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:25px 15px;
 }
 
 .box{
- background:#fff;
- border-radius:13px;
- padding:18px;
- box-shadow:0 2px 9px #0001;
- margin-bottom:15px
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    margin-bottom:20px;
+    box-shadow:0 2px 10px #00000012;
 }
 
-.stats{
- display:grid;
- grid-template-columns:repeat(4,1fr);
- gap:10px
+input,select{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:7px;
+    margin:6px 0 12px;
 }
 
-.stat{
- background:#fff;
- padding:15px;
- border-radius:12px
+button{
+    border:0;
+    border-radius:7px;
+    padding:11px 15px;
+    cursor:pointer;
 }
 
-.stat b{
- display:block;
- font-size:25px;
- margin-top:5px
+.primary{
+    background:#22c55e;
+    color:white;
+    width:100%;
+    font-weight:bold;
 }
 
-.tabs{
- display:flex;
- gap:8px;
- margin-bottom:15px;
- overflow:auto
+.dark{
+    background:#111827;
+    color:white;
 }
 
-.btn{
- border:0;
- border-radius:8px;
- padding:10px 13px;
- background:#111827;
- color:#fff;
- cursor:pointer
+.danger{
+    background:#ef4444;
+    color:white;
 }
 
-.green{
- background:#16a34a
-}
-
-.red{
- background:#ef4444
-}
-
-.gray{
- background:#6b7280
-}
-
-section{
- display:none
-}
-
-section.active{
- display:block
-}
-
-.field{
- margin:10px 0
-}
-
-.field label{
- display:block;
- font-size:13px;
- font-weight:bold;
- margin-bottom:5px
-}
-
-input,textarea,select{
- width:100%;
- padding:11px;
- border:1px solid #ddd;
- border-radius:8px
-}
-
-.row{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:10px
+.hidden{
+    display:none;
 }
 
 .product{
- display:flex;
- align-items:center;
- gap:10px;
- padding:12px 0;
- border-bottom:1px solid #eee
+    border:1px solid #ddd;
+    border-radius:10px;
+    padding:15px;
+    margin-top:12px;
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+    align-items:center;
 }
 
-.product img{
- width:60px;
- height:60px;
- object-fit:cover;
- border-radius:8px
+.product-info{
+    flex:1;
 }
 
-.grow{
- flex:1
+.product-info h3{
+    margin-bottom:6px;
 }
 
-.table{
- overflow:auto
+.product-info p{
+    color:#666;
+    font-size:14px;
 }
 
-table{
- width:100%;
- border-collapse:collapse
+.actions{
+    display:flex;
+    gap:7px;
 }
 
-th,td{
- padding:10px;
- border-bottom:1px solid #eee;
- text-align:left;
- font-size:13px
-}
-
-#login{
- max-width:420px;
- margin:70px auto
-}
-
-.note{
- background:#eef2ff;
- padding:10px;
- border-radius:8px;
- font-size:13px;
- margin-bottom:12px
-}
-
-#lm,
-#pm{
- margin-top:12px
+.status{
+    padding:12px;
+    border-radius:7px;
+    margin-bottom:15px;
+    background:#eef2ff;
 }
 
 @media(max-width:650px){
+    .product{
+        flex-direction:column;
+        align-items:stretch;
+    }
 
- .stats{
-  grid-template-columns:1fr 1fr
- }
+    .actions{
+        width:100%;
+    }
 
- .row{
-  grid-template-columns:1fr
- }
-
- .product{
-  flex-wrap:wrap
- }
-
- .product button{
-  flex:1
- }
+    .actions button{
+        flex:1;
+    }
 }
 </style>
 </head>
 
 <body>
 
+<header>
+<h1>NovaStore Admin</h1>
+</header>
+
+<div class="container">
+
 <!-- LOGIN -->
 
-<div id="login" class="box">
+<div id="loginBox" class="box">
 
-<h2>NovaStore Admin</h2>
+<h2>Admin Login</h2>
 
-<p>Sign in with the authorized admin account.</p>
-
-<div class="field">
-
-<label>Email</label>
+<br>
 
 <input
- id="le"
- type="email"
- autocomplete="username"
+id="email"
+type="email"
+placeholder="Admin email"
 >
-
-</div>
-
-<div class="field">
-
-<label>Password</label>
 
 <input
- id="lp"
- type="password"
- autocomplete="current-password"
+id="password"
+type="password"
+placeholder="Password"
 >
-
-</div>
 
 <button
- class="btn green"
- onclick="adminLogin()"
+class="primary"
+onclick="login()"
 >
 Login
 </button>
 
-<p id="lm"></p>
+<p id="loginStatus" style="margin-top:12px;color:#ef4444"></p>
 
 </div>
 
 
-<!-- ADMIN DASHBOARD -->
+<!-- DASHBOARD -->
 
-<div id="app" style="display:none">
+<div id="dashboard" class="hidden">
 
-<header>
+<div class="box">
 
-<div class="wrap top">
+<h2>Admin Dashboard</h2>
 
-<h1>NovaStore Admin</h1>
+<p id="adminEmail" style="margin:8px 0;color:#666"></p>
 
 <button
- class="btn gray"
- onclick="logout()"
+class="dark"
+onclick="logout()"
 >
 Logout
 </button>
 
 </div>
 
-</header>
 
+<!-- ADD PRODUCT -->
 
-<div class="wrap">
+<div class="box">
 
+<h2 id="formTitle">
+Add Product
+</h2>
 
-<!-- STATS -->
+<br>
 
-<div class="stats">
+<input
+id="productName"
+type="text"
+placeholder="Product name"
+>
 
-<div class="stat">
-Products
-<b id="sp">0</b>
-</div>
+<input
+id="productPrice"
+type="number"
+placeholder="Price"
+>
 
-<div class="stat">
-Orders
-<b id="so">0</b>
-</div>
+<input
+id="productOld"
+type="number"
+placeholder="Old price"
+>
 
-<div class="stat">
-Customers
-<b id="sc">0</b>
-</div>
+<select id="productCategory">
 
-<div class="stat">
-Pending
-<b id="sn">0</b>
-</div>
+<option value="Electronics">
+Electronics
+</option>
 
-</div>
+<option value="Fashion">
+Fashion
+</option>
 
+<option value="Home">
+Home
+</option>
 
-<!-- TABS -->
+<option value="Accessories">
+Accessories
+</option>
 
-<div class="tabs">
+</select>
+
+<input
+id="productIcon"
+type="text"
+placeholder="Product icon e.g. 🎧"
+>
+
+<input
+id="productDescription"
+type="text"
+placeholder="Product description"
+>
 
 <button
- class="btn green"
- onclick="tab('psec')"
+class="primary"
+onclick="saveProduct()"
+id="saveButton"
 >
-Products
+Add Product
 </button>
 
-<button
- class="btn"
- onclick="tab('osec')"
->
-Orders
-</button>
+<br><br>
 
 <button
- class="btn"
- onclick="tab('csec')"
+class="dark hidden"
+onclick="cancelEdit()"
+id="cancelButton"
 >
-Customers
+Cancel Edit
 </button>
+
+<p id="productStatus" style="margin-top:12px"></p>
 
 </div>
 
 
 <!-- PRODUCTS -->
 
-<section
- id="psec"
- class="active"
->
-
-<div class="box">
-
-<h2 id="ft">
-Add Product
-</h2>
-
-<div class="note">
-Save here → Firebase → the public NovaStore website updates automatically.
-</div>
-
-<input
- id="eid"
- type="hidden"
->
-
-
-<div class="row">
-
-<div class="field">
-
-<label>Product name</label>
-
-<input id="pn">
-
-</div>
-
-
-<div class="field">
-
-<label>Category</label>
-
-<input id="pc">
-
-</div>
-
-</div>
-
-
-<div class="row">
-
-<div class="field">
-
-<label>Price (₦)</label>
-
-<input
- id="pp"
- type="number"
->
-
-</div>
-
-
-<div class="field">
-
-<label>Old price (₦)</label>
-
-<input
- id="po"
- type="number"
->
-
-</div>
-
-</div>
-
-
-<div class="field">
-
-<label>Image URL</label>
-
-<input
- id="pi"
- placeholder="https://..."
->
-
-</div>
-
-
-<div class="field">
-
-<label>Description</label>
-
-<textarea
- id="pd"
- rows="3"
-></textarea>
-
-</div>
-
-
-<button
- class="btn green"
- onclick="saveProduct()"
->
-Save Product
-</button>
-
-<button
- class="btn gray"
- onclick="clearForm()"
->
-Clear
-</button>
-
-<p id="pm"></p>
-
-</div>
-
-
 <div class="box">
 
 <h2>Products</h2>
 
-<div id="plist">
-Loading...
+<div id="productsList">
+Loading products...
 </div>
 
 </div>
-
-</section>
-
-
-<!-- ORDERS -->
-
-<section id="osec">
-
-<div class="box">
-
-<h2>Orders</h2>
-
-<div id="olist">
-Loading...
-</div>
-
-</div>
-
-</section>
-
-
-<!-- CUSTOMERS -->
-
-<section id="csec">
-
-<div class="box">
-
-<h2>Customers</h2>
-
-<div id="clist">
-Loading...
-</div>
-
-</div>
-
-</section>
-
 
 </div>
 
@@ -496,962 +295,551 @@ Loading...
 
 <script type="module">
 
-import {
- initializeApp
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
- getDatabase,
- ref,
- onValue,
- push,
- set,
- update,
- remove
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+    getAuth,
+    signInWithEmailAndPassword,
+    onAuthStateChanged,
+    signOut
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 import {
- getAuth,
- onAuthStateChanged,
- signInWithEmailAndPassword,
- signOut
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    getDatabase,
+    ref,
+    push,
+    set,
+    get,
+    remove
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 
-/* FIREBASE CONFIG */
+/* FIREBASE */
 
 const firebaseConfig = {
 
- apiKey:
- "AIzaSyCNrU3igTkkcQ0Z6Zq1dluKw_s_3yHovE",
+    apiKey:
+    "AIzaSyCNrU3igTkkcQ0Z6Zq1dluKw_s_3yHovjE",
 
- authDomain:
- "novastore-6fd18.firebaseapp.com",
+    authDomain:
+    "novastore-6fd18.firebaseapp.com",
 
- databaseURL:
- "https://novastore-6fd18-default-rtdb.asia-southeast1.firebasedatabase.app",
+    databaseURL:
+    "https://novastore-6fd18-default-rtdb.asia-southeast1.firebasedatabase.app",
 
- projectId:
- "novastore-6fd18",
+    projectId:
+    "novastore-6fd18",
 
- storageBucket:
- "novastore-6fd18.firebasestorage.app",
+    storageBucket:
+    "novastore-6fd18.firebasestorage.app",
 
- messagingSenderId:
- "783420364153",
+    messagingSenderId:
+    "783420364153",
 
- appId:
- "1:783420364153:web:1b56b655e3e804726d8ba8",
+    appId:
+    "1:783420364153:web:1b56b655e3e804726d8ba8",
 
- measurementId:
- "G-Q760SBLPLT"
-
+    measurementId:
+    "G-Q760SBLPLT"
 };
 
 
-/* INITIALIZE FIREBASE */
+const app = initializeApp(firebaseConfig);
 
-const firebaseApp =
- initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
-const db =
- getDatabase(firebaseApp);
-
-const auth =
- getAuth(firebaseApp);
-
-
-/* PAGE ELEMENTS */
-
-const loginBox =
- document.getElementById("login");
-
-const adminApp =
- document.getElementById("app");
-
-const emailInput =
- document.getElementById("le");
-
-const passwordInput =
- document.getElementById("lp");
-
-const loginMessage =
- document.getElementById("lm");
+const db = getDatabase(app);
 
 
 /* ADMIN EMAIL */
 
 const ADMIN_EMAIL =
- "sbgodstime@gmail.com";
+"Sbgodstime@gmail.com";
 
 
-/* DATA */
+/* EDITING */
 
-let products = {};
-let orders = {};
-let users = {};
-
-
-/* MONEY */
-
-const money = n =>
- "₦" +
- Number(n || 0)
- .toLocaleString("en-NG");
-
-
-/* SECURITY */
-
-const safe = s =>
- String(s ?? "")
- .replace(
-  /[&<>"']/g,
-  c => ({
-   "&":"&amp;",
-   "<":"&lt;",
-   ">":"&gt;",
-   '"':"&quot;",
-   "'":"&#039;"
-  }[c])
- );
-
-
-/* AUTH STATE */
-
-onAuthStateChanged(
- auth,
- user => {
-
-  if(
-   user &&
-   user.email &&
-   user.email.toLowerCase() ===
-   ADMIN_EMAIL.toLowerCase()
-  ){
-
-   loginBox.style.display =
-   "none";
-
-   adminApp.style.display =
-   "block";
-
-   start();
-
-  }else{
-
-   loginBox.style.display =
-   "block";
-
-   adminApp.style.display =
-   "none";
-
-   if(user){
-
-    signOut(auth);
-
-    loginMessage.textContent =
-    "This account is not authorized for the admin panel.";
-
-   }
-
-  }
-
- }
-);
+let editingId = null;
 
 
 /* LOGIN */
 
-window.adminLogin =
- async function(){
+window.login = async function(){
 
-  const email =
-  emailInput.value.trim();
+    const email =
+    document.getElementById("email").value.trim();
 
-  const password =
-  passwordInput.value;
+    const password =
+    document.getElementById("password").value;
 
-  loginMessage.textContent =
-  "Signing in...";
+    const status =
+    document.getElementById("loginStatus");
 
-  if(!email || !password){
+    status.textContent = "";
 
-   loginMessage.textContent =
-   "Enter your email and password.";
+    if(!email || !password){
 
-   return;
+        status.textContent =
+        "Enter your email and password.";
 
-  }
+        return;
+    }
 
-  try{
+    try{
 
-   await signInWithEmailAndPassword(
-    auth,
-    email,
-    password
-   );
+        const result =
+        await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+        );
 
-   loginMessage.textContent =
-   "";
+        if(
+            result.user.email.toLowerCase() !==
+            ADMIN_EMAIL.toLowerCase()
+        ){
 
-  }catch(error){
+            await signOut(auth);
 
-   console.error(error);
+            status.textContent =
+            "This account is not authorized as an admin.";
 
-   let message =
-   error.message || "Login failed.";
+            return;
+        }
 
-   if(
-    error.code ===
-    "auth/invalid-credential"
-   ){
+    }catch(error){
 
-    message =
-    "Incorrect email or password.";
+        console.error(error);
 
-   }
+        status.textContent =
+        "Login failed. Check your email and password.";
 
-   if(
-    error.code ===
-    "auth/invalid-email"
-   ){
-
-    message =
-    "Please enter a valid email address.";
-
-   }
-
-   if(
-    error.code ===
-    "auth/user-disabled"
-   ){
-
-    message =
-    "This account has been disabled.";
-
-   }
-
-   if(
-    error.code ===
-    "auth/too-many-requests"
-   ){
-
-    message =
-    "Too many login attempts. Please wait and try again.";
-
-   }
-
-   loginMessage.textContent =
-   message;
-
-  }
+    }
 
 };
 
 
+/* AUTH STATE */
+
+onAuthStateChanged(auth,user => {
+
+    if(
+        user &&
+        user.email &&
+        user.email.toLowerCase() ===
+        ADMIN_EMAIL.toLowerCase()
+    ){
+
+        document
+        .getElementById("loginBox")
+        .classList.add("hidden");
+
+        document
+        .getElementById("dashboard")
+        .classList.remove("hidden");
+
+        document
+        .getElementById("adminEmail")
+        .textContent =
+        "Logged in as: " + user.email;
+
+        loadProducts();
+
+    }else{
+
+        document
+        .getElementById("loginBox")
+        .classList.remove("hidden");
+
+        document
+        .getElementById("dashboard")
+        .classList.add("hidden");
+
+    }
+
+});
+
+
 /* LOGOUT */
 
-window.logout =
- function(){
+window.logout = async function(){
 
-  signOut(auth);
+    await signOut(auth);
 
- };
-
-
-/* START DATABASE LISTENERS */
-
-function start(){
-
- onValue(
-  ref(db,"products"),
-  snapshot => {
-
-   products =
-   snapshot.val() || {};
-
-   renderP();
-   stats();
-
-  },
-  error => {
-
-   console.error(
-    "Products error:",
-    error
-   );
-
-  }
- );
+};
 
 
- onValue(
-  ref(db,"orders"),
-  snapshot => {
+/* LOAD PRODUCTS */
 
-   orders =
-   snapshot.val() || {};
+async function loadProducts(){
 
-   renderO();
-   stats();
+    const list =
+    document.getElementById("productsList");
 
-  },
-  error => {
+    list.innerHTML =
+    "Loading products...";
 
-   console.error(
-    "Orders error:",
-    error
-   );
+    try{
 
-  }
- );
+        const snapshot =
+        await get(ref(db,"products"));
 
+        if(!snapshot.exists()){
 
- onValue(
-  ref(db,"users"),
-  snapshot => {
+            list.innerHTML =
+            "<p>No products yet.</p>";
 
-   users =
-   snapshot.val() || {};
+            return;
+        }
 
-   renderC();
-   stats();
+        const data =
+        snapshot.val();
 
-  },
-  error => {
+        list.innerHTML = "";
 
-   console.error(
-    "Users error:",
-    error
-   );
+        Object.entries(data).forEach(
+            ([id,p]) => {
 
-  }
- );
+                const div =
+                document.createElement("div");
 
-}
+                div.className =
+                "product";
 
+                div.innerHTML = `
 
-/* STATS */
+                    <div class="product-info">
 
-function stats(){
+                        <h3>
+                            ${escapeHtml(p.icon || "📦")}
+                            ${escapeHtml(p.name || "")}
+                        </h3>
 
- document.getElementById("sp")
- .textContent =
- Object.keys(products).length;
+                        <p>
+                            Category:
+                            ${escapeHtml(p.cat || "")}
+                        </p>
 
- document.getElementById("so")
- .textContent =
- Object.keys(orders).length;
+                        <p>
+                            Price:
+                            ₦${Number(p.price || 0).toLocaleString("en-NG")}
+                        </p>
 
- document.getElementById("sc")
- .textContent =
- Object.keys(users).length;
+                    </div>
 
- document.getElementById("sn")
- .textContent =
- Object.values(orders)
- .filter(
-  o =>
-  (o.status || "pending")
-  === "pending"
- )
- .length;
+                    <div class="actions">
+
+                        <button
+                            class="dark"
+                            onclick="editProduct('${id}')"
+                        >
+                            Edit
+                        </button>
+
+                        <button
+                            class="danger"
+                            onclick="deleteProduct('${id}')"
+                        >
+                            Delete
+                        </button>
+
+                    </div>
+                `;
+
+                list.appendChild(div);
+
+            }
+        );
+
+    }catch(error){
+
+        console.error(error);
+
+        list.innerHTML =
+        "<p style='color:red'>Could not load products.</p>";
+
+    }
 
 }
-
-
-/* TABS */
-
-window.tab =
- function(id){
-
-  document
-  .querySelectorAll("section")
-  .forEach(
-   x =>
-   x.classList.remove("active")
-  );
-
-  document
-  .getElementById(id)
-  .classList.add("active");
-
- };
 
 
 /* SAVE PRODUCT */
 
-window.saveProduct =
- async function(){
+window.saveProduct = async function(){
 
-  const name =
-  document.getElementById("pn")
-  .value.trim();
+    const name =
+    document.getElementById("productName")
+    .value.trim();
 
-  const price =
-  Number(
-   document.getElementById("pp")
-   .value
-  );
-
-  const pm =
-  document.getElementById("pm");
-
-  if(
-   !name ||
-   !price
-  ){
-
-   pm.textContent =
-   "Product name and price are required.";
-
-   return;
-
-  }
-
-
-  const data = {
-
-   name:name,
-
-   category:
-   document.getElementById("pc")
-   .value.trim() ||
-   "General",
-
-   price:price,
-
-   oldPrice:
-   Number(
-    document.getElementById("po")
-    .value
-   ) || 0,
-
-   image:
-   document.getElementById("pi")
-   .value.trim(),
-
-   description:
-   document.getElementById("pd")
-   .value.trim(),
-
-   available:true,
-
-   updatedAt:
-   Date.now()
-
-  };
-
-
-  try{
-
-   const editId =
-   document.getElementById("eid")
-   .value;
-
-   if(editId){
-
-    await update(
-     ref(
-      db,
-      "products/" + editId
-     ),
-     data
+    const price =
+    Number(
+        document.getElementById("productPrice")
+        .value
     );
 
-    pm.textContent =
-    "Product updated successfully.";
-
-   }else{
-
-    const productRef =
-    push(
-     ref(db,"products")
+    const old =
+    Number(
+        document.getElementById("productOld")
+        .value
     );
 
-    await set(
-     productRef,
-     {
-      ...data,
-      createdAt:Date.now()
-     }
-    );
+    const cat =
+    document.getElementById("productCategory")
+    .value;
 
-    pm.textContent =
-    "Product saved successfully.";
+    const icon =
+    document.getElementById("productIcon")
+    .value.trim() || "📦";
 
-   }
+    const desc =
+    document.getElementById("productDescription")
+    .value.trim();
 
-   clearForm();
+    const status =
+    document.getElementById("productStatus");
 
-  }catch(error){
+    if(!name || !price){
 
-   console.error(error);
+        status.style.color =
+        "#ef4444";
 
-   pm.textContent =
-   error.message ||
-   "Could not save product.";
+        status.textContent =
+        "Enter a product name and price.";
 
-  }
+        return;
+    }
+
+    const product = {
+
+        name:name,
+
+        price:price,
+
+        old:old || price,
+
+        cat:cat,
+
+        icon:icon,
+
+        desc:desc
+
+    };
+
+    try{
+
+        if(editingId){
+
+            await set(
+                ref(db,"products/" + editingId),
+                product
+            );
+
+            status.style.color =
+            "#15803d";
+
+            status.textContent =
+            "Product updated successfully.";
+
+        }else{
+
+            const newProduct =
+            push(ref(db,"products"));
+
+            await set(
+                newProduct,
+                product
+            );
+
+            status.style.color =
+            "#15803d";
+
+            status.textContent =
+            "Product added successfully.";
+
+        }
+
+        clearForm();
+
+        loadProducts();
+
+    }catch(error){
+
+        console.error(error);
+
+        status.style.color =
+        "#ef4444";
+
+        status.textContent =
+        "Could not save product. Check Firebase rules.";
+
+    }
+
+};
+
+
+/* EDIT PRODUCT */
+
+window.editProduct = async function(id){
+
+    try{
+
+        const snapshot =
+        await get(
+            ref(db,"products/" + id)
+        );
+
+        if(!snapshot.exists()){
+
+            alert("Product not found.");
+
+            return;
+        }
+
+        const p =
+        snapshot.val();
+
+        editingId = id;
+
+        document.getElementById("productName")
+        .value = p.name || "";
+
+        document.getElementById("productPrice")
+        .value = p.price || "";
+
+        document.getElementById("productOld")
+        .value = p.old || "";
+
+        document.getElementById("productCategory")
+        .value = p.cat || "Electronics";
+
+        document.getElementById("productIcon")
+        .value = p.icon || "";
+
+        document.getElementById("productDescription")
+        .value = p.desc || "";
+
+        document.getElementById("formTitle")
+        .textContent =
+        "Edit Product";
+
+        document.getElementById("saveButton")
+        .textContent =
+        "Update Product";
+
+        document.getElementById("cancelButton")
+        .classList.remove("hidden");
+
+        window.scrollTo({
+            top:0,
+            behavior:"smooth"
+        });
+
+    }catch(error){
+
+        console.error(error);
+
+        alert("Could not load product.");
+
+    }
+
+};
+
+
+/* DELETE PRODUCT */
+
+window.deleteProduct = async function(id){
+
+    if(
+        !confirm(
+            "Are you sure you want to delete this product?"
+        )
+    ){
+
+        return;
+
+    }
+
+    try{
+
+        await remove(
+            ref(db,"products/" + id)
+        );
+
+        loadProducts();
+
+    }catch(error){
+
+        console.error(error);
+
+        alert(
+            "Could not delete product."
+        );
+
+    }
+
+};
+
+
+/* CANCEL EDIT */
+
+window.cancelEdit = function(){
+
+    clearForm();
 
 };
 
 
 /* CLEAR FORM */
 
-window.clearForm =
- function(){
+function clearForm(){
 
-  document.getElementById("eid")
-  .value = "";
+    editingId = null;
 
-  document.getElementById("pn")
-  .value = "";
+    document.getElementById("productName")
+    .value = "";
 
-  document.getElementById("pc")
-  .value = "";
+    document.getElementById("productPrice")
+    .value = "";
 
-  document.getElementById("pp")
-  .value = "";
+    document.getElementById("productOld")
+    .value = "";
 
-  document.getElementById("po")
-  .value = "";
+    document.getElementById("productIcon")
+    .value = "";
 
-  document.getElementById("pi")
-  .value = "";
+    document.getElementById("productDescription")
+    .value = "";
 
-  document.getElementById("pd")
-  .value = "";
+    document.getElementById("formTitle")
+    .textContent =
+    "Add Product";
 
-  document.getElementById("ft")
-  .textContent =
-  "Add Product";
+    document.getElementById("saveButton")
+    .textContent =
+    "Add Product";
 
- };
-
-
-/* RENDER PRODUCTS */
-
-function renderP(){
-
- const plist =
- document.getElementById("plist");
-
- const list =
- Object.entries(products);
-
-
- plist.innerHTML =
- list.length
-
- ? list.map(
-   ([id,p]) => `
-
-   <div class="product">
-
-   ${
-    p.image
-    ?
-    `<img
-      src="${safe(p.image)}"
-      alt="${safe(p.name)}"
-    >`
-    :
-    `<div style="
-      width:60px;
-      height:60px;
-      background:#eee;
-      border-radius:8px;
-      display:flex;
-      align-items:center;
-      justify-content:center
-    ">
-      🛍️
-    </div>`
-   }
-
-   <div class="grow">
-
-   <b>
-   ${safe(p.name)}
-   </b>
-
-   <br>
-
-   <small>
-   ${safe(p.category)}
-   ·
-   ${money(p.price)}
-   </small>
-
-   </div>
-
-   <button
-    class="btn"
-    onclick="editP('${id}')"
-   >
-   Edit
-   </button>
-
-   <button
-    class="btn red"
-    onclick="delP('${id}')"
-   >
-   Delete
-   </button>
-
-   </div>
-
-   `
-  ).join("")
-
- :
-
- "<p>No products yet.</p>";
+    document.getElementById("cancelButton")
+    .classList.add("hidden");
 
 }
 
 
-/* EDIT PRODUCT */
+/* ESCAPE HTML */
 
-window.editP =
- function(id){
+function escapeHtml(value){
 
-  const p =
-  products[id];
+    return String(value)
 
-  if(!p)return;
-
-  document.getElementById("eid")
-  .value = id;
-
-  document.getElementById("pn")
-  .value = p.name || "";
-
-  document.getElementById("pc")
-  .value = p.category || "";
-
-  document.getElementById("pp")
-  .value = p.price || "";
-
-  document.getElementById("po")
-  .value = p.oldPrice || "";
-
-  document.getElementById("pi")
-  .value = p.image || "";
-
-  document.getElementById("pd")
-  .value = p.description || "";
-
-  document.getElementById("ft")
-  .textContent =
-  "Edit Product";
-
-  window.scrollTo({
-   top:0,
-   behavior:"smooth"
-  });
-
- };
-
-
-/* DELETE PRODUCT */
-
-window.delP =
- async function(id){
-
-  if(
-   confirm(
-    "Delete this product?"
-   )
-  ){
-
-   try{
-
-    await remove(
-     ref(
-      db,
-      "products/" + id
-     )
-    );
-
-   }catch(error){
-
-    console.error(error);
-
-    alert(
-     error.message
-    );
-
-   }
-
-  }
-
- };
-
-
-/* RENDER ORDERS */
-
-function renderO(){
-
- const olist =
- document.getElementById("olist");
-
- const list =
- Object.entries(orders)
- .sort(
-  (a,b) =>
-  (b[1].createdAt || 0) -
-  (a[1].createdAt || 0)
- );
-
-
- if(!list.length){
-
-  olist.innerHTML =
-  "<p>No orders yet.</p>";
-
-  return;
-
- }
-
-
- olist.innerHTML = `
-
- <div class="table">
-
- <table>
-
- <tr>
-
- <th>Order</th>
-
- <th>Customer</th>
-
- <th>Total</th>
-
- <th>Status</th>
-
- </tr>
-
- ${
-  list.map(
-   ([id,o]) => `
-
-   <tr>
-
-   <td>
-   ${safe(id.slice(-8))}
-   </td>
-
-   <td>
-   ${safe(o.email)}
-   </td>
-
-   <td>
-   ${money(o.total)}
-   </td>
-
-   <td>
-
-   <select
-    onchange="
-     changeStatus(
-      '${id}',
-      this.value
-     )
-    "
-   >
-
-   <option
-    value="pending"
-    ${
-     o.status === "pending"
-     ||
-     !o.status
-     ?
-     "selected"
-     :
-     ""
-    }
-   >
-   pending
-   </option>
-
-   <option
-    value="processing"
-    ${
-     o.status === "processing"
-     ?
-     "selected"
-     :
-     ""
-    }
-   >
-   processing
-   </option>
-
-   <option
-    value="shipped"
-    ${
-     o.status === "shipped"
-     ?
-     "selected"
-     :
-     ""
-    }
-   >
-   shipped
-   </option>
-
-   <option
-    value="delivered"
-    ${
-     o.status === "delivered"
-     ?
-     "selected"
-     :
-     ""
-    }
-   >
-   delivered
-   </option>
-
-   <option
-    value="cancelled"
-    ${
-     o.status === "cancelled"
-     ?
-     "selected"
-     :
-     ""
-    }
-   >
-   cancelled
-   </option>
-
-   </select>
-
-   </td>
-
-   </tr>
-
-   `
-  ).join("")
- }
-
- </table>
-
- </div>
-
- `;
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 
 }
-
-
-/* CHANGE ORDER STATUS */
-
-window.changeStatus =
- async function(id,status){
-
-  try{
-
-   await update(
-    ref(
-     db,
-     "orders/" + id
-    ),
-    {
-     status:status,
-     updatedAt:Date.now()
-    }
-   );
-
-  }catch(error){
-
-   console.error(error);
-
-   alert(
-    error.message
-   );
-
-  }
-
- };
-
-
-/* RENDER CUSTOMERS */
-
-function renderC(){
-
- const clist =
- document.getElementById("clist");
-
- const list =
- Object.values(users);
-
-
- if(!list.length){
-
-  clist.innerHTML =
-  "<p>No customers yet.</p>";
-
-  return;
-
- }
-
-
- clist.innerHTML = `
-
- <div class="table">
-
- <table>
-
- <tr>
-
- <th>Email</th>
-
- <th>Joined</th>
-
- </tr>
-
- ${
-  list.map(
-   u => `
-
-   <tr>
-
-   <td>
-   ${safe(u.email)}
-   </td>
-
-   <td>
-
-   ${
-    u.createdAt
-    ?
-    new Date(
-     u.createdAt
-    ).toLocaleString()
-    :
-    "-"
-   }
-
-   </td>
-
-   </tr>
-
-   `
-  ).join("")
- }
-
- </table>
-
- </div>
-
- `;
-
- }
 
 </script>
 
